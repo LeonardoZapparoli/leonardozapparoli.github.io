@@ -13,4 +13,22 @@ const repository = defineCollection({
   }),
 });
 
-export const collections = { repository };
+const blog = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    date: z.coerce.date(),
+  }),
+});
+
+// Prose for the fixed pages (home, repository intro, miscellaneous) —
+// editable as plain Markdown without touching any layout code.
+const pages = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/pages' }),
+  schema: z.object({
+    title: z.string().optional(),
+  }),
+});
+
+export const collections = { repository, blog, pages };

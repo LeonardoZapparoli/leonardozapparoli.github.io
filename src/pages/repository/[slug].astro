@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { lastUpdated, formatDate } from '../../lib/dates.mjs';
 
 export async function getStaticPaths() {
   const entries = await getCollection('repository');
@@ -12,45 +13,100 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
-const toc = headings.filter((h) => h.depth === 2);
-const date = entry.data.date.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  timeZone: 'UTC',
-});
+
+const toc = [];
+for (const h of headings.filter((h) => h.depth === 2 || h.depth === 3)) {
+  if (h.depth === 2) toc.push({ ...h, children: [] });
+  else if (toc.length > 0) toc[toc.length - 1].children.push(h);
+}
+
+const updated = formatDate(lastUpdated(entry.filePath, entry.data.date));
 ---
 
 <Base
   title={`${entry.data.title} — Leonardo Zapparoli`}
   description={entry.data.description}
+  width={toc.length > 0 ? 'wide' : 'narrow'}
 >
-  <article class="entry">
-    <header class="entry-header">
-      <h1>{entry.data.title}</h1>
-      <p class="entry-meta">
-        <span class="code-chip">{entry.data.code}</span> · {date}
-      </p>
-      <p class="entry-abstract">{entry.data.description}</p>
-    </header>
-
+  <div class={toc.length > 0 ? 'entry-layout' : undefined}>
     {
       toc.length > 0 && (
-        <nav class="toc" aria-label="Table of contents">
-          <span class="toc-title">Contents</span>
-          <ol>
-            {toc.map((h) => (
-              <li>
-                <a href={`#${h.slug}`}>{h.text}</a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+        <aside class="toc-side">
+          <nav class="toc" aria-label="Table of contents">
+            <span class="toc-title">Contents</span>
+            <ol class="toc-list">
+              {toc.map((h) => (
+                <li>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                  {h.children.length > 0 && (
+                    <ol class="toc-sub">
+                      {h.children.map((c) => (
+                        <li>
+                          <a href={`#${c.slug}`}>{c.text}</a>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
       )
     }
+    <article class="entry">
+      <header class="entry-header">
+        <h1>{entry.data.title}</h1>
+        <p class="entry-meta">
+          <span class="code-chip">{entry.data.code}</span> · Last updated {updated}
+        </p>
+        <p class="entry-abstract">{entry.data.description}</p>
+      </header>
+      <div class="entry-body">
+        <Content />
+      </div>
+    </article>
+  </div>
 
-    <div class="entry-body">
-      <Content />
-    </div>
-  </article>
+  <script is:inline>
+    (function () {
+      var links = Array.prototype.slice.call(
+        document.querySelectorAll('.toc a')
+      );
+      var headings = Array.prototype.slice.call(
+        document.querySelectorAll('.entry-body h2[id], .entry-body h3[id]')
+      );
+      if (links.length === 0 || headings.length === 0) return;
+      var ticking = false;
+      function update() {
+        ticking = false;
+        var current = null;
+        for (var i = 0; i < headings.length; i++) {
+          if (headings[i].getBoundingClientRect().top <= 130) {
+            current = headings[i];
+          } else {
+            break;
+          }
+        }
+        var hash = current ? '#' + current.id : null;
+        links.forEach(function (link) {
+          link.classList.toggle(
+            'active',
+            hash !== null && link.getAttribute('href') === hash
+          );
+        });
+      }
+      window.addEventListener(
+        'scroll',
+        function () {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        },
+        { passive: true }
+      );
+      update();
+    })();
+  </script>
 </Base>

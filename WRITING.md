@@ -96,9 +96,21 @@ publish until it's fixed (it will suggest the closest matching label).
 Drop `.tex` files into the `import/` folder and ask Claude to convert them
 into entries. Preamble macros they rely on get merged into `preamble.tex`.
 
-## Where things live
+## Where things live (everything you edit is Markdown)
 
-- Entries: `src/content/repository/*.md` (one file per entry)
-- Global math macros: `preamble.tex`
-- Your homepage text: `src/pages/index.astro` (edit the paragraphs freely)
+| Page / content | File to edit |
+| --- | --- |
+| Repository entries | `src/content/repository/*.md` (one file per entry) |
+| Blog posts | `src/content/blog/*.md` (copy `_template.md` to start one) |
+| Home page text | `src/content/pages/home.md` |
+| Technical Repository intro text | `src/content/pages/repository-intro.md` |
+| Miscellaneous page | `src/content/pages/miscellaneous.md` |
+| Global math macros | `preamble.tex` |
+
+Notes:
+
+- The "Last updated" date on each entry is automatic — it comes from the git
+  history, so it advances whenever you publish changes to that file.
+- The navigation dropdowns (Blog, Technical Repository) build themselves from
+  whatever files exist — adding an entry adds it to the menu.
 - Everything else is machinery — no need to touch it.

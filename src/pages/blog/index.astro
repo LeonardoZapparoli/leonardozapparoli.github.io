@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatDate } from '../../lib/dates.mjs';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base title="Blog — Leonardo Zapparoli">
+  <h1>Blog</h1>
+  {posts.length === 0 && <p>Nothing here yet.</p>}
+  <ul class="entry-list">
+    {
+      posts.map((post) => (
+        <li>
+          <a class="entry-title" href={`/blog/${post.id}/`}>
+            {post.data.title}
+          </a>
+          <p class="entry-line">{formatDate(post.data.date)}</p>
+          {post.data.description && (
+            <p class="entry-desc">{post.data.description}</p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</Base>

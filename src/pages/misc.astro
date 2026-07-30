@@ -1,0 +1,12 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const page = await getEntry('pages', 'miscellaneous');
+const { Content } = await render(page);
+---
+
+<Base title="Miscellaneous — Leonardo Zapparoli">
+  <h1>Miscellaneous</h1>
+  <Content />
+</Base>

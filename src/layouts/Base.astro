@@ -1,16 +1,26 @@
 ---
 import 'katex/dist/katex.min.css';
 import '../styles/global.css';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title?: string;
   description?: string;
+  width?: 'narrow' | 'wide';
 }
 
 const {
   title = 'Leonardo Zapparoli',
   description = 'Personal website and technical repository of Leonardo Zapparoli.',
+  width = 'narrow',
 } = Astro.props;
+
+const repoEntries = (await getCollection('repository')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+const blogPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 8);
 
 const year = new Date().getFullYear();
 ---
@@ -43,11 +53,35 @@ const year = new Date().getFullYear();
       <a class="site-name" href="/">Leonardo Zapparoli</a>
       <nav>
         <a href="/">Home</a>
-        <a href="/repository/">Technical Repository</a>
+        <div class="nav-item">
+          <a href="/blog/">Blog</a>
+          {
+            blogPosts.length > 0 && (
+              <div class="dropdown">
+                {blogPosts.map((post) => (
+                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+        <div class="nav-item">
+          <a href="/repository/">Technical Repository</a>
+          {
+            repoEntries.length > 0 && (
+              <div class="dropdown">
+                {repoEntries.map((entry) => (
+                  <a href={`/repository/${entry.id}/`}>{entry.data.title}</a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+        <a href="/misc/">Miscellaneous</a>
         <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
       </nav>
     </header>
-    <main>
+    <main class={width === 'wide' ? 'main-wide' : undefined}>
       <slot />
     </main>
     <footer class="site-footer">© {year} Leonardo Zapparoli</footer>

@@ -1,11 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 
-const entries = (await getCollection('repository')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
-const recent = entries.slice(0, 5);
+const page = await getEntry('pages', 'home');
+const { Content } = await render(page);
 ---
 
 <Base>
@@ -15,35 +13,6 @@ const recent = entries.slice(0, 5);
       <a href="mailto:lez1@me.com">lez1@me.com</a> ·
       <a href="https://github.com/LeonardoZapparoli">GitHub</a>
     </p>
-    <p>
-      I keep this site as a home for my technical writing. Most of it lives in
-      the <a href="/repository/">technical repository</a>: self-contained notes
-      on topics in mathematics and statistics, written primarily so that I can
-      revisit and reuse them, and shared here in case they are useful to
-      others.
-    </p>
+    <Content />
   </div>
-
-  <p class="section-label">Recent entries</p>
-  <ul class="entry-list">
-    {
-      recent.map((entry) => (
-        <li>
-          <a class="entry-title" href={`/repository/${entry.id}/`}>
-            {entry.data.title}
-          </a>
-          <p class="entry-line">
-            <span class="code-chip">{entry.data.code}</span> ·{' '}
-            {entry.data.date.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              timeZone: 'UTC',
-            })}
-          </p>
-          <p class="entry-desc">{entry.data.description}</p>
-        </li>
-      ))
-    }
-  </ul>
 </Base>
