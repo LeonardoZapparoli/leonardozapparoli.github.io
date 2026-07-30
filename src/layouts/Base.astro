@@ -50,36 +50,38 @@ const year = new Date().getFullYear();
   </head>
   <body>
     <header class="site-header">
-      <a class="site-name" href="/">Leonardo Zapparoli</a>
-      <nav>
-        <a href="/">Home</a>
-        <div class="nav-item">
-          <a href="/blog/">Blog</a>
-          {
-            blogPosts.length > 0 && (
-              <div class="dropdown">
-                {blogPosts.map((post) => (
-                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-                ))}
-              </div>
-            )
-          }
-        </div>
-        <div class="nav-item">
-          <a href="/repository/">Technical Repository</a>
-          {
-            repoEntries.length > 0 && (
-              <div class="dropdown">
-                {repoEntries.map((entry) => (
-                  <a href={`/repository/${entry.id}/`}>{entry.data.title}</a>
-                ))}
-              </div>
-            )
-          }
-        </div>
-        <a href="/misc/">Miscellaneous</a>
-        <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
-      </nav>
+      <div class="header-row">
+        <a class="site-name" href="/">Leonardo Zapparoli</a>
+        <nav>
+          <a href="/">Home</a>
+          <div class="nav-item nav-blog"><a href="/blog/">Blog</a></div>
+          <div class="nav-item nav-repo"><a href="/repository/">Technical Repository</a></div>
+          <a href="/misc/">Miscellaneous</a>
+          <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+        </nav>
+      </div>
+      {
+        blogPosts.length > 0 && (
+          <div class="header-panel panel-blog">
+            <div class="panel-inner">
+              {blogPosts.map((post) => (
+                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              ))}
+            </div>
+          </div>
+        )
+      }
+      {
+        repoEntries.length > 0 && (
+          <div class="header-panel panel-repo">
+            <div class="panel-inner">
+              {repoEntries.map((entry) => (
+                <a href={`/repository/${entry.id}/`}>{entry.data.title}</a>
+              ))}
+            </div>
+          </div>
+        )
+      }
     </header>
     <main class={width === 'wide' ? 'main-wide' : undefined}>
       <slot />
