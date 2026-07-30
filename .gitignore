@@ -1,0 +1,11 @@
+# build output and caches
+dist/
+.astro/
+node_modules/
+
+# imported .tex sources (converted into entries, originals stay local)
+import/*
+!import/.gitkeep
+
+# OS noise
+.DS_Store

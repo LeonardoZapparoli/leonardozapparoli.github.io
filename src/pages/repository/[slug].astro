@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('repository');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2);
+const date = entry.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<Base
+  title={`${entry.data.title} — Leonardo Zapparoli`}
+  description={entry.data.description}
+>
+  <article class="entry">
+    <header class="entry-header">
+      <h1>{entry.data.title}</h1>
+      <p class="entry-meta">
+        <span class="code-chip">{entry.data.code}</span> · {date}
+      </p>
+      <p class="entry-abstract">{entry.data.description}</p>
+    </header>
+
+    {
+      toc.length > 0 && (
+        <nav class="toc" aria-label="Table of contents">
+          <span class="toc-title">Contents</span>
+          <ol>
+            {toc.map((h) => (
+              <li>
+                <a href={`#${h.slug}`}>{h.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+
+    <div class="entry-body">
+      <Content />
+    </div>
+  </article>
+</Base>

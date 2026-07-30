@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const entries = (await getCollection('repository')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base
+  title="Technical Repository — Leonardo Zapparoli"
+  description="Notes on mathematics and statistics: linear algebra, probability, information theory, optimization, and more."
+>
+  <h1>Technical Repository</h1>
+  <p>
+    Self-contained notes on mathematical and statistical topics. Each entry has
+    a short code (e.g. <span class="code-chip">LinAlg</span>) used to
+    cross-reference results between entries.
+  </p>
+  <ul class="entry-list">
+    {
+      entries.map((entry) => (
+        <li>
+          <a class="entry-title" href={`/repository/${entry.id}/`}>
+            {entry.data.title}
+          </a>
+          <p class="entry-line">
+            <span class="code-chip">{entry.data.code}</span> ·{' '}
+            {entry.data.date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              timeZone: 'UTC',
+            })}
+          </p>
+          <p class="entry-desc">{entry.data.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
