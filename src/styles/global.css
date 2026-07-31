@@ -317,6 +317,17 @@ blockquote {
   border-bottom-style: dotted;
 }
 
+.email-link::after {
+  content: ' (hover to reveal)';
+  color: var(--muted);
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+.email-link.revealed::after {
+  content: '';
+}
+
 /* ---------- Home ---------- */
 
 .home-intro p {

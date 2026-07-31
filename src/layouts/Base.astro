@@ -98,6 +98,7 @@ const year = new Date().getFullYear();
             var address = el.dataset.user + '@' + el.dataset.domain;
             el.textContent = address;
             el.href = 'mailto:' + address;
+            el.classList.add('revealed');
             revealed = true;
           }
           el.addEventListener('mouseenter', reveal);
