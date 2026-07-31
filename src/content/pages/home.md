@@ -4,9 +4,9 @@ title: Home
 
 ## About me
 
-Welcome to my online repository. I graduated from Yale College in 2024, where I studied math and computer science. I presently work in financial markets.
+Welcome to my online repository. I'm Leo. I graduated from Yale College in 2024, where I studied math and computer science. I presently work in financial markets.
 
-My interests include problem-solving, soccer, tennis, skiing, aviation, and chess.
+My interests include math, problem-solving, aviation, soccer, tennis, skiing, and chess.
 
 ## Contact
 
