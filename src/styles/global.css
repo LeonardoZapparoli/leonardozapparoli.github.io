@@ -230,8 +230,9 @@ blockquote {
   overflow: hidden;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  column-gap: 2rem;
+  grid-template-columns: repeat(auto-fill, 16rem);
+  justify-content: start;
+  column-gap: 1.75rem;
   row-gap: 0.55rem;
   padding-bottom: 1.1rem;
   opacity: 0;

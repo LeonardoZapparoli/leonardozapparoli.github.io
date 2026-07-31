@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { lastUpdated, formatDate } from '../../lib/dates.mjs';
+import { site } from '../../../site.config.mjs';
 
 export async function getStaticPaths() {
   const entries = await getCollection('repository');
@@ -24,7 +25,7 @@ const updated = formatDate(lastUpdated(entry.filePath, entry.data.date));
 ---
 
 <Base
-  title={`${entry.data.title} — Leonardo Zapparoli`}
+  title={`${entry.data.title} — ${site.author}`}
   description={entry.data.description}
   width={toc.length > 0 ? 'wide' : 'narrow'}
 >

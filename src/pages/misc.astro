@@ -1,12 +1,13 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { site } from '../../site.config.mjs';
 
 const page = await getEntry('pages', 'miscellaneous');
 const { Content } = await render(page);
 ---
 
-<Base title="Miscellaneous — Leonardo Zapparoli">
-  <h1>Miscellaneous</h1>
+<Base title={`${site.nav.misc} — ${site.author}`}>
+  <h1>{site.nav.misc}</h1>
   <Content />
 </Base>

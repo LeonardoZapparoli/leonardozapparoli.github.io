@@ -105,6 +105,7 @@ into entries. Preamble macros they rely on get merged into `preamble.tex`.
 | Home page text | `src/content/pages/home.md` |
 | Technical Repository intro text | `src/content/pages/repository-intro.md` |
 | Miscellaneous page | `src/content/pages/miscellaneous.md` |
+| Section names, your name, email/GitHub links | `site.config.mjs` |
 | Global math macros | `preamble.tex` |
 
 Notes:

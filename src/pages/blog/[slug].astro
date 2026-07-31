@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { formatDate } from '../../lib/dates.mjs';
+import { site } from '../../../site.config.mjs';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -16,7 +17,7 @@ const { Content } = await render(post);
 ---
 
 <Base
-  title={`${post.data.title} — Leonardo Zapparoli`}
+  title={`${post.data.title} — ${site.author}`}
   description={post.data.description}
 >
   <article class="entry">

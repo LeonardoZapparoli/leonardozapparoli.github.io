@@ -2,6 +2,7 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { lastUpdated, formatDate } from '../../lib/dates.mjs';
+import { site } from '../../../site.config.mjs';
 
 const intro = await getEntry('pages', 'repository-intro');
 const { Content } = await render(intro);
@@ -12,10 +13,10 @@ const entries = (await getCollection('repository')).sort((a, b) =>
 ---
 
 <Base
-  title="Technical Repository — Leonardo Zapparoli"
+  title={`${site.nav.repository} — ${site.author}`}
   description="Notes on mathematics and statistics: linear algebra, probability, information theory, optimization, and more."
 >
-  <h1>Technical Repository</h1>
+  <h1>{site.nav.repository}</h1>
   <Content />
   <ul class="entry-list">
     {

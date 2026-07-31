@@ -2,6 +2,7 @@
 import 'katex/dist/katex.min.css';
 import '../styles/global.css';
 import { getCollection } from 'astro:content';
+import { site } from '../../site.config.mjs';
 
 interface Props {
   title?: string;
@@ -10,8 +11,8 @@ interface Props {
 }
 
 const {
-  title = 'Leonardo Zapparoli',
-  description = 'Personal website and technical repository of Leonardo Zapparoli.',
+  title = site.author,
+  description = `Personal website and technical repository of ${site.author}.`,
   width = 'narrow',
 } = Astro.props;
 
@@ -51,12 +52,12 @@ const year = new Date().getFullYear();
   <body>
     <header class="site-header">
       <div class="header-row">
-        <a class="site-name" href="/">Leonardo Zapparoli</a>
+        <a class="site-name" href="/">{site.author}</a>
         <nav>
           <a href="/">Home</a>
-          <div class="nav-item nav-blog"><a href="/blog/">Blog</a></div>
-          <div class="nav-item nav-repo"><a href="/repository/">Technical Repository</a></div>
-          <a href="/misc/">Miscellaneous</a>
+          <div class="nav-item nav-blog"><a href="/blog/">{site.nav.blog}</a></div>
+          <div class="nav-item nav-repo"><a href="/repository/">{site.nav.repository}</a></div>
+          <a href="/misc/">{site.nav.misc}</a>
           <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
         </nav>
       </div>
@@ -86,7 +87,7 @@ const year = new Date().getFullYear();
     <main class={width === 'wide' ? 'main-wide' : undefined}>
       <slot />
     </main>
-    <footer class="site-footer">© {year} Leonardo Zapparoli</footer>
+    <footer class="site-footer">© {year} {site.author}</footer>
     <script is:inline>
       document.getElementById('theme-toggle').addEventListener('click', function () {
         var next =
