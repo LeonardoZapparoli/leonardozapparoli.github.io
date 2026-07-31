@@ -89,6 +89,28 @@ const year = new Date().getFullYear();
     </main>
     <footer class="site-footer">© {year} {site.author}</footer>
     <script is:inline>
+      document
+        .querySelectorAll('a.email-link[data-user][data-domain]')
+        .forEach(function (el) {
+          var revealed = false;
+          function reveal() {
+            if (revealed) return;
+            var address = el.dataset.user + '@' + el.dataset.domain;
+            el.textContent = address;
+            el.href = 'mailto:' + address;
+            revealed = true;
+          }
+          el.addEventListener('mouseenter', reveal);
+          el.addEventListener('focus', reveal);
+          el.addEventListener('click', function (e) {
+            if (!revealed) {
+              e.preventDefault();
+              reveal();
+            }
+          });
+        });
+    </script>
+    <script is:inline>
       document.getElementById('theme-toggle').addEventListener('click', function () {
         var next =
           document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';

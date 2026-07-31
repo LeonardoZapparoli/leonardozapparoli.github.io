@@ -311,6 +311,12 @@ blockquote {
   font-size: 0.85rem;
 }
 
+/* email address hidden until hover (anti-scraper) */
+.email-link {
+  cursor: pointer;
+  border-bottom-style: dotted;
+}
+
 /* ---------- Home ---------- */
 
 .home-intro p {

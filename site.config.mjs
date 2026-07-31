@@ -2,7 +2,7 @@
 // (navigation, page titles, footer) on the next preview/publish.
 export const site = {
   author: 'Leonardo Zapparoli',
-  email: 'lez1@me.com',
+  email: 'leonardozapparoli@gmail.com',
   github: 'https://github.com/LeonardoZapparoli',
 
   // Section names shown in the navigation and as page headings.
