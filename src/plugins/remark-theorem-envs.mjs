@@ -1,13 +1,37 @@
+import katex from 'katex';
 import { visit } from 'unist-util-visit';
 import { annotateNumbers, ENV_KINDS, KIND_LABELS } from './numbering.mjs';
+import { loadPreambleMacros } from './preamble.mjs';
 
-const ALL_ENVS = [...ENV_KINDS, 'proof'];
+// 'proof' and 'moral' are unnumbered companions to the numbered kinds.
+const ALL_ENVS = [...ENV_KINDS, 'proof', 'moral'];
+
+const macros = loadPreambleMacros(new URL('../../preamble.tex', import.meta.url));
+
+// Titles may contain inline math ($...$); render those segments with KaTeX
+// at build time so e.g. title="Matrix of $T^*$" typesets correctly.
+function titleParts(text) {
+  const parts = [];
+  const re = /\$([^$]+)\$/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(text))) {
+    if (m.index > last) parts.push({ type: 'text', value: text.slice(last, m.index) });
+    parts.push({
+      type: 'html',
+      value: katex.renderToString(m[1], { macros: { ...macros }, throwOnError: false }),
+    });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push({ type: 'text', value: text.slice(last) });
+  return parts;
+}
 
 function span(classNames, text) {
   return {
     type: 'strong',
     data: { hName: 'span', hProperties: { className: classNames } },
-    children: [{ type: 'text', value: text }],
+    children: typeof text === 'string' ? titleParts(text) : text,
   };
 }
 
@@ -53,6 +77,7 @@ export function remarkTheoremEnvs() {
       const kind = node.name;
       const id = (node.attributes && node.attributes.id) || null;
       const title = (node.attributes && node.attributes.title) || null;
+      const source = (node.attributes && node.attributes.source) || null;
 
       node.data = node.data || {};
       const props = { className: ['env', `env-${kind}`] };
@@ -65,7 +90,14 @@ export function remarkTheoremEnvs() {
       };
 
       if (kind === 'proof') {
-        head.children.push(span(['env-kind', 'env-kind-proof'], 'Proof.'));
+        const text = title
+          ? title.startsWith('of')
+            ? `Proof ${title}.`
+            : `Proof (${title}).`
+          : 'Proof.';
+        head.children.push(span(['env-kind', 'env-kind-proof'], text));
+      } else if (kind === 'moral') {
+        head.children.push(span(['env-kind'], `${title || 'Moral & Significance'}.`));
       } else {
         const number = node.data.envNumber;
         props['data-kind'] = kind;
@@ -90,6 +122,10 @@ export function remarkTheoremEnvs() {
             children: [{ type: 'text', value: '¶' }],
           });
         }
+      }
+
+      if (source) {
+        head.children.push(span(['env-source'], source));
       }
 
       node.data.hName = 'section';

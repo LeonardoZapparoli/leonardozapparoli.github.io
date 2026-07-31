@@ -531,6 +531,7 @@ blockquote {
 
 .env-head {
   margin: 0 0 0.4rem !important;
+  display: flow-root;
 }
 
 .env-kind {
@@ -539,6 +540,22 @@ blockquote {
 
 .env-title {
   font-weight: 400;
+}
+
+/* source reference (e.g. "Axler 3.22"), right-aligned in the header */
+.env-source {
+  float: right;
+  font-weight: 400;
+  font-size: 0.78em;
+  color: var(--muted);
+  margin-left: 1rem;
+  padding-top: 0.25em;
+}
+
+/* "Moral & Significance" boxes: unnumbered, emphasized takeaway */
+.env-moral {
+  background: var(--panel);
+  border-left: 3px solid var(--text);
 }
 
 /* italic body for theorem-class environments, LaTeX-style */
@@ -591,6 +608,49 @@ blockquote {
   content: '\220E';
   float: right;
   color: var(--muted);
+}
+
+/* ---------- Figures (compiled TikZ) ---------- */
+
+.fig {
+  text-align: center;
+  margin: 1.8rem 0;
+}
+
+.fig img {
+  max-width: 100%;
+  height: auto;
+}
+
+:root[data-theme='dark'] .fig img {
+  filter: invert(0.88) hue-rotate(180deg);
+}
+
+.fig figcaption {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* ---------- Tables ---------- */
+
+.entry-body table {
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin: 1.2rem 0;
+}
+
+.entry-body th,
+.entry-body td {
+  border: 1px solid var(--rule);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.entry-body th {
+  background: var(--panel);
 }
 
 /* ---------- Equations & math ---------- */

@@ -116,9 +116,9 @@ $$
 :::remark{#geometry-remark}
 By [[#kl-nonneg]], $I(X;Y) \ge 0$ with equality iff $X$ and $Y$ are
 independent — mutual information is a nonnegative measure of dependence.
-Compare the role of the Cauchy–Schwarz inequality [[LinAlg:cauchy-schwarz]]
-in bounding correlation: the bound [[LinAlg:cs-inequality]] controls *linear*
-dependence, while $I(X;Y)$ detects dependence of any form.
+Compare the role of the Cauchy–Schwarz inequality
+[[LinAlg:pythagorean-cauchy-schwarz]] in bounding correlation: it controls
+*linear* dependence, while $I(X;Y)$ detects dependence of any form.
 :::
 
 ## The asymptotic equipartition property
