@@ -229,38 +229,23 @@ blockquote {
 .header-panel .panel-inner {
   overflow: hidden;
   min-height: 0;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  column-gap: 2rem;
+  row-gap: 0.55rem;
   padding-bottom: 1.1rem;
   opacity: 0;
   transition: opacity 0.2s ease 0.15s;
 }
 
-.panel-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.panel-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  column-gap: 2.2rem;
-  row-gap: 0.45rem;
-}
-
-.panel-links a {
+.panel-inner a {
   font-size: 0.92rem;
   color: var(--muted);
   border-bottom: none;
+  width: fit-content;
 }
 
-.panel-links a:hover {
+.panel-inner a:hover {
   color: var(--text);
   background: none;
 }

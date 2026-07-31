@@ -64,12 +64,9 @@ const year = new Date().getFullYear();
         blogPosts.length > 0 && (
           <div class="header-panel panel-blog">
             <div class="panel-inner">
-              <span class="panel-label">Blog</span>
-              <div class="panel-links">
-                {blogPosts.map((post) => (
-                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-                ))}
-              </div>
+              {blogPosts.map((post) => (
+                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              ))}
             </div>
           </div>
         )
@@ -78,12 +75,9 @@ const year = new Date().getFullYear();
         repoEntries.length > 0 && (
           <div class="header-panel panel-repo">
             <div class="panel-inner">
-              <span class="panel-label">Technical Repository</span>
-              <div class="panel-links">
-                {repoEntries.map((entry) => (
-                  <a href={`/repository/${entry.id}/`}>{entry.data.title}</a>
-                ))}
-              </div>
+              {repoEntries.map((entry) => (
+                <a href={`/repository/${entry.id}/`}>{entry.data.title}</a>
+              ))}
             </div>
           </div>
         )
