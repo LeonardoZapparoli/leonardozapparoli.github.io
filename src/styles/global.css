@@ -618,6 +618,7 @@ blockquote {
 }
 
 .fig img {
+  zoom: 1.45;
   max-width: 100%;
   height: auto;
 }
