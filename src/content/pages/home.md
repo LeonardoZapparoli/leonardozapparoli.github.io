@@ -10,4 +10,4 @@ My interests include math, problem-solving, aviation, soccer, tennis, skiing, an
 
 ## Contact
 
-<a class="email-link" href="#" data-user="leonardozapparoli" data-domain="gmail.com">email</a> · [LinkedIn](https://www.linkedin.com/in/leonardo-zapparoli-a84657189/) · [Chess.com](https://www.chess.com/member/chineseremaindertheorem)
+<a class="email-link" href="#" data-user="leonardozapparoli" data-domain="gmail.com">Email</a> · [LinkedIn](https://www.linkedin.com/in/leonardo-zapparoli-a84657189/) · [Chess.com](https://www.chess.com/member/chineseremaindertheorem)
