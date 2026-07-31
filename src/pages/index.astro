@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { site } from '../../site.config.mjs';
 
 const page = await getEntry('pages', 'home');
 const { Content } = await render(page);
@@ -9,11 +8,6 @@ const { Content } = await render(page);
 
 <Base>
   <div class="home-intro">
-    <h1>{site.author}</h1>
-    <p class="home-links">
-      <a href={`mailto:${site.email}`}>{site.email}</a> ·
-      <a href={site.github}>GitHub</a>
-    </p>
     <Content />
   </div>
 </Base>
