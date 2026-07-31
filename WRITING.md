@@ -17,7 +17,7 @@ Open Terminal in this folder (in VS Code: Terminal → New Terminal), then:
 npm run new "Measure-Theoretic Probability" MeasureProb
 ```
 
-This creates `src/content/repository/measure-theoretic-probability.md` from
+This creates `src/content/notes/measure-theoretic-probability.md` from
 the template, with the title, code, and today's date filled in. Or copy
 `_template.md` by hand. Every entry needs frontmatter:
 
@@ -100,10 +100,10 @@ into entries. Preamble macros they rely on get merged into `preamble.tex`.
 
 | Page / content | File to edit |
 | --- | --- |
-| Repository entries | `src/content/repository/*.md` (one file per entry) |
+| Notes entries | `src/content/notes/*.md` (one file per entry) |
 | Blog posts | `src/content/blog/*.md` (copy `_template.md` to start one) |
 | Home page text | `src/content/pages/home.md` |
-| Technical Repository intro text | `src/content/pages/repository-intro.md` |
+| Notes intro text | `src/content/pages/notes-intro.md` |
 | Miscellaneous page | `src/content/pages/miscellaneous.md` |
 | Section names, your name, email/GitHub links | `site.config.mjs` |
 | Global math macros | `preamble.tex` |

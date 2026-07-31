@@ -8,7 +8,7 @@ import remarkDirective from 'remark-directive';
 import { annotateNumbers } from './numbering.mjs';
 import { state } from './state.mjs';
 
-const CONTENT_DIR = path.resolve(process.cwd(), 'src/content/repository');
+const CONTENT_DIR = path.resolve(process.cwd(), 'src/content/notes');
 
 // Same syntax plugins as the site pipeline, so tokenization is identical.
 const parser = unified().use(remarkParse).use(remarkMath).use(remarkDirective);
@@ -59,7 +59,7 @@ export function getRegistry() {
       problems.push(`${name}: duplicate entry code "${rec.code}"`);
       continue;
     }
-    const route = `/repository/${rec.slug}/`;
+    const route = `/notes/${rec.slug}/`;
     entries.set(rec.code, { slug: rec.slug, route });
 
     const seen = new Set();

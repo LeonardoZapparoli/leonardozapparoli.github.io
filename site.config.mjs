@@ -7,10 +7,10 @@ export const site = {
 
   // Section names shown in the navigation and as page headings.
   // Renaming here renames the section across the whole site
-  // (the web addresses /blog/, /repository/, /misc/ stay the same).
+  // (the web addresses /blog/, /notes/, /misc/ stay the same).
   nav: {
     blog: 'Blog',
-    repository: 'Technical Repository',
+    notes: 'Notes',
     misc: 'Miscellaneous',
   },
 };

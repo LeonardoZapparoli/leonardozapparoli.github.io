@@ -1,5 +1,5 @@
 ---
-title: Technical Repository
+title: Notes
 ---
 
 Self-contained notes on mathematical and statistical topics. Each entry has a

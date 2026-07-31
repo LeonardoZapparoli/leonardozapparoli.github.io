@@ -1,8 +1,8 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const repository = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/repository' }),
+const notes = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/notes' }),
   schema: z.object({
     title: z.string(),
     code: z
@@ -22,7 +22,7 @@ const blog = defineCollection({
   }),
 });
 
-// Prose for the fixed pages (home, repository intro, miscellaneous) —
+// Prose for the fixed pages (home, notes intro, miscellaneous) —
 // editable as plain Markdown without touching any layout code.
 const pages = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/pages' }),
@@ -31,4 +31,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { repository, blog, pages };
+export const collections = { notes, blog, pages };

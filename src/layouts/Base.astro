@@ -12,11 +12,11 @@ interface Props {
 
 const {
   title = site.author,
-  description = `Personal website and technical repository of ${site.author}.`,
+  description = `Personal website and technical notes of ${site.author}.`,
   width = 'narrow',
 } = Astro.props;
 
-const repoEntries = (await getCollection('repository')).sort((a, b) =>
+const noteEntries = (await getCollection('notes')).sort((a, b) =>
   a.data.title.localeCompare(b.data.title)
 );
 const blogPosts = (await getCollection('blog'))
@@ -56,7 +56,7 @@ const year = new Date().getFullYear();
         <nav>
           <a href="/">Home</a>
           <div class="nav-item nav-blog"><a href="/blog/">{site.nav.blog}</a></div>
-          <div class="nav-item nav-repo"><a href="/repository/">{site.nav.repository}</a></div>
+          <div class="nav-item nav-notes"><a href="/notes/">{site.nav.notes}</a></div>
           <a href="/misc/">{site.nav.misc}</a>
           <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
         </nav>
@@ -73,11 +73,11 @@ const year = new Date().getFullYear();
         )
       }
       {
-        repoEntries.length > 0 && (
-          <div class="header-panel panel-repo">
+        noteEntries.length > 0 && (
+          <div class="header-panel panel-notes">
             <div class="panel-inner">
-              {repoEntries.map((entry) => (
-                <a href={`/repository/${entry.id}/`}>{entry.data.title}</a>
+              {noteEntries.map((entry) => (
+                <a href={`/notes/${entry.id}/`}>{entry.data.title}</a>
               ))}
             </div>
           </div>

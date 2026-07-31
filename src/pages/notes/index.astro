@@ -4,25 +4,25 @@ import Base from '../../layouts/Base.astro';
 import { lastUpdated, formatDate } from '../../lib/dates.mjs';
 import { site } from '../../../site.config.mjs';
 
-const intro = await getEntry('pages', 'repository-intro');
+const intro = await getEntry('pages', 'notes-intro');
 const { Content } = await render(intro);
 
-const entries = (await getCollection('repository')).sort((a, b) =>
+const entries = (await getCollection('notes')).sort((a, b) =>
   a.data.title.localeCompare(b.data.title)
 );
 ---
 
 <Base
-  title={`${site.nav.repository} — ${site.author}`}
+  title={`${site.nav.notes} — ${site.author}`}
   description="Notes on mathematics and statistics: linear algebra, probability, information theory, optimization, and more."
 >
-  <h1>{site.nav.repository}</h1>
+  <h1>{site.nav.notes}</h1>
   <Content />
   <ul class="entry-list">
     {
       entries.map((entry) => (
         <li>
-          <a class="entry-title" href={`/repository/${entry.id}/`}>
+          <a class="entry-title" href={`/notes/${entry.id}/`}>
             {entry.data.title}
           </a>
           <p class="entry-line">

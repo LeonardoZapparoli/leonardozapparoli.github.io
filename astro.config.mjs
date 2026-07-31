@@ -12,6 +12,10 @@ const macros = loadPreambleMacros(new URL('./preamble.tex', import.meta.url));
 
 export default defineConfig({
   site: 'https://leonardozapparoli.github.io',
+  redirects: {
+    '/repository/': '/notes/',
+    '/repository/[slug]': '/notes/[slug]',
+  },
   integrations: [refSystem()],
   markdown: {
     remarkPlugins: [remarkMath, remarkDirective, remarkTheoremEnvs, remarkCrossRefs],

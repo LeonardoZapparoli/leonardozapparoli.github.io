@@ -1,6 +1,6 @@
 # leonardozapparoli.github.io
 
-Personal website and technical repository. Built with Astro; math rendered
+Personal website and technical notes. Built with Astro; math rendered
 at build time with KaTeX; theorem environments and cross-references
 implemented as custom remark plugins in `src/plugins/`.
 

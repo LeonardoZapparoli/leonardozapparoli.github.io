@@ -254,8 +254,8 @@ blockquote {
 /* keep the parent section highlighted while its panel is open */
 .site-header:has(.nav-blog:hover) .nav-blog > a,
 .site-header:has(.panel-blog:hover) .nav-blog > a,
-.site-header:has(.nav-repo:hover) .nav-repo > a,
-.site-header:has(.panel-repo:hover) .nav-repo > a {
+.site-header:has(.nav-notes:hover) .nav-notes > a,
+.site-header:has(.panel-notes:hover) .nav-notes > a {
   color: var(--text);
   border-bottom: 1px solid var(--link-underline);
 }
@@ -264,10 +264,10 @@ blockquote {
 .site-header:has(.nav-blog a:focus) .panel-blog,
 .panel-blog:hover,
 .panel-blog:focus-within,
-.site-header:has(.nav-repo:hover) .panel-repo,
-.site-header:has(.nav-repo a:focus) .panel-repo,
-.panel-repo:hover,
-.panel-repo:focus-within {
+.site-header:has(.nav-notes:hover) .panel-notes,
+.site-header:has(.nav-notes a:focus) .panel-notes,
+.panel-notes:hover,
+.panel-notes:focus-within {
   grid-template-rows: 1fr;
   transition-delay: 0s;
 }
@@ -276,10 +276,10 @@ blockquote {
 .site-header:has(.nav-blog a:focus) .panel-blog .panel-inner,
 .panel-blog:hover .panel-inner,
 .panel-blog:focus-within .panel-inner,
-.site-header:has(.nav-repo:hover) .panel-repo .panel-inner,
-.site-header:has(.nav-repo a:focus) .panel-repo .panel-inner,
-.panel-repo:hover .panel-inner,
-.panel-repo:focus-within .panel-inner {
+.site-header:has(.nav-notes:hover) .panel-notes .panel-inner,
+.site-header:has(.nav-notes a:focus) .panel-notes .panel-inner,
+.panel-notes:hover .panel-inner,
+.panel-notes:focus-within .panel-inner {
   opacity: 1;
   transition-delay: 0s;
 }

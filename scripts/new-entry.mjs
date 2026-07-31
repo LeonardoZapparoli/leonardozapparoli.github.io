@@ -17,7 +17,7 @@ const slug = title
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '');
 
-const dir = path.resolve('src/content/repository');
+const dir = path.resolve('src/content/notes');
 const target = path.join(dir, `${slug}.md`);
 
 if (fs.existsSync(target)) {
