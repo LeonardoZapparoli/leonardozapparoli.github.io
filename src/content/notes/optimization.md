@@ -1,6 +1,6 @@
 ---
-title: "Introduction to Information Theory"
-code: InfoTheory
+title: "Optimization"
+code: Opt
 description: "To be updated."
 date: 2026-08-02
 ---

@@ -50,7 +50,7 @@ const year = new Date().getFullYear();
     </script>
   </head>
   <body>
-    <header class="site-header">
+    <header class:list={['site-header', width === 'wide' && 'wide']}>
       <div class="header-row">
         <a class="site-name" href="/">{site.author}</a>
         <nav>
@@ -87,7 +87,7 @@ const year = new Date().getFullYear();
     <main class={width === 'wide' ? 'main-wide' : undefined}>
       <slot />
     </main>
-    <footer class="site-footer">© {year} {site.author}</footer>
+    <footer class:list={['site-footer', width === 'wide' && 'wide']}>© {year} {site.author}</footer>
     <script is:inline>
       document
         .querySelectorAll('a.email-link[data-user][data-domain]')

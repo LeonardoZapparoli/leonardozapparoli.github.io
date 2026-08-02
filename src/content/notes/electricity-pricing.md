@@ -1,6 +1,6 @@
 ---
-title: "Introduction to Information Theory"
-code: InfoTheory
+title: "The Mathematics of Electricity Pricing"
+code: ElecPricing
 description: "To be updated."
 date: 2026-08-02
 ---

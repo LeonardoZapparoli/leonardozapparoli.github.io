@@ -179,6 +179,13 @@ blockquote {
   border-bottom: 1px solid var(--rule);
 }
 
+/* on wide pages the header and footer stretch to the same rails as the
+   toc + content grid, so all three blocks share left/right edges */
+.site-header.wide,
+.site-footer.wide {
+  max-width: 78rem;
+}
+
 .header-row {
   display: flex;
   align-items: baseline;
@@ -451,7 +458,10 @@ blockquote {
   background: none;
 }
 
-/* wide layout: sticky sidebar table of contents on entry pages */
+/* wide layout: sticky sidebar table of contents on entry pages.
+   Width contract: header/footer on wide pages share this same max-width,
+   so the TOC's left edge and the text column's right edge sit exactly on
+   the header's edges: 15rem toc + 3.5rem gap + 57rem content + 2.5rem padding. */
 .main-wide {
   max-width: 78rem;
 }
@@ -459,7 +469,7 @@ blockquote {
 @media (min-width: 1024px) {
   .entry-layout {
     display: grid;
-    grid-template-columns: 15rem minmax(0, 46rem);
+    grid-template-columns: 15rem minmax(0, 57rem);
     gap: 3.5rem;
     justify-content: center;
   }

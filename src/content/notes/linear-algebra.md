@@ -1,7 +1,7 @@
 ---
 title: "Linear Algebra"
 code: LinAlg
-description: "A personal reference on finite-dimensional linear algebra: vector spaces, linear maps, spectral theory, the SVD, and the matrix factorization zoo."
+description: "Finite-dimensional linear algebra: vector spaces, linear maps, spectral theory, and matrix factorizations."
 date: 2026-07-30
 ---
 
@@ -10,7 +10,7 @@ date: 2026-07-30
 ## Vector Spaces
 
 :::definition{#vector-space-over-a-field title="Vector Space over a Field $\F$"}
-A **vector space** $V$ over a field $\F$ (always $\R$ or $\C$ for us) is a set equipped with addition and scalar multiplication satisfying eight axioms (commutativity, associativity, distributivity, additive/multiplicative identities and inverses). Elements of $V$ are **vectors**; elements of $\F$ are **scalars**.
+A **vector space** $V$ over a field $\F$ (usually $\R$ or $\C$ in this document) is a set equipped with addition and scalar multiplication satisfying eight axioms (commutativity, associativity, distributivity, additive/multiplicative identities and inverses). Elements of $V$ are **vectors**; elements of $\F$ are **scalars**. Vector spaces are closed under **linear combinations**, meaning for any set of vectors $v_1,...,v_k \in V$ and scalars $a_1,...,a_k \in \F$, the element $\sum_i a_iv_i$ is again an element of the vector space.
 :::
 
 :::definition{#subspace title="Subspace"}
@@ -18,7 +18,7 @@ $U \subseteq V$ is a **subspace** iff it satisfies three conditions:
 
 (1) $0 \in U$; (2) closed under addition; (3) closed under scalar multiplication.
 
-Checking these three is sufficient — the remaining vector space axioms are automatically inherited from $V$.
+Checking these three conditions is sufficient; the remaining vector space axioms are automatically inherited from $V$.
 :::
 
 :::definition{#sum-and-direct-sum-of-subspaces title="Sum and Direct Sum of Subspaces"}
@@ -38,7 +38,7 @@ The sum is a **direct sum**, written $V_1 \oplus \cdots \oplus V_m$, iff every e
 :::definition{#span-linear-independence-basis-dimension title="Span, Linear Independence, Basis, Dimension"}
 **Span:** $\spn(v_1,\ldots,v_m)$ = all linear combinations of the $v_i$ — "everything you can reach." Always a subspace.
 
-**Linear independence:** $v_1,\ldots,v_n$ are linearly independent iff $\sum a_i v_i = 0 \Rightarrow a_1 = \cdots = a_n = 0$. Equivalently: there is a *unique* way to write $0$.
+**Linear independence:** $v_1,\ldots,v_n$ are linearly independent iff $\sum a_i v_i = 0 \Rightarrow a_1 = \cdots = a_n = 0$, meaning the only way to write the $0$ vector is as a sum of zeros. Equivalently: there is a *unique* way to write any given vector in $\spn(v_1,..,v_n)$.
 
 **Basis:** A linearly independent spanning list. Equivalently: every $v \in V$ is *uniquely* $v = \sum a_i v_i$.
 
