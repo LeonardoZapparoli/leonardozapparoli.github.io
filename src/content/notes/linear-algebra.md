@@ -13,6 +13,8 @@ date: 2026-07-30
 A **vector space** $V$ over a field $\F$ (usually $\R$ or $\C$ in this document) is a set equipped with addition and scalar multiplication satisfying eight axioms (commutativity, associativity, distributivity, additive/multiplicative identities and inverses). Elements of $V$ are **vectors**; elements of $\F$ are **scalars**. Vector spaces are closed under **linear combinations**, meaning for any set of vectors $v_1,...,v_k \in V$ and scalars $a_1,...,a_k \in \F$, the element $\sum_i a_iv_i$ is again an element of the vector space.
 :::
 
+Many times we are interested in vector spaces that are nested within a larger vector space. These are called subspaces.
+
 :::definition{#subspace title="Subspace"}
 $U \subseteq V$ is a **subspace** iff it satisfies three conditions:
 
@@ -22,21 +24,21 @@ Checking these three conditions is sufficient; the remaining vector space axioms
 :::
 
 :::definition{#sum-and-direct-sum-of-subspaces title="Sum and Direct Sum of Subspaces"}
-The **sum** of subspaces $V_1,\ldots,V_m \subseteq V$:
+The **sum** of subspaces $V_1,\ldots,V_m \subseteq V$ is the set of all element-wise sums:
 
 $$
 V_1 + \cdots + V_m \;=\; \{v_1 + \cdots + v_m \;\mid\; v_i \in V_i\;\forall i\}.
 $$
 
-The sum is a **direct sum**, written $V_1 \oplus \cdots \oplus V_m$, iff every element has a *unique* decomposition as $v_1 + \cdots + v_m$ — equivalently, iff **the only way to write $0$ is $0 + \cdots + 0$**.
+The sum is said to be a **direct sum**, written $V_1 \oplus \cdots \oplus V_m$, iff every element has a *unique* decomposition as $v_1 + \cdots + v_m$ — equivalently, iff **the only way to write $0$ is $0 + \cdots + 0$**.
 
 **Two subspaces:** $U + W$ is direct $\iff U \cap W = \{0\}$. (This clean criterion fails for three or more subspaces.)
 
-*Intuition: a direct sum is a decomposition with zero redundancy. The canonical example ([[#orthogonal-direct-sum-decomposition]]) is $V = U \oplus U^\perp$, where the inner product enforces exactly the right amount of non-overlap.*
+*Intuition: a direct sum is a decomposition with zero redundancy. The canonical example ([[#orthogonal-direct-sum-decomposition]]) is $V = U \oplus U^\perp$. For instance, the Euclidean plane $\R^2$ is a direct sum of the $x$- and $y$-axes.*
 :::
 
 :::definition{#span-linear-independence-basis-dimension title="Span, Linear Independence, Basis, Dimension"}
-**Span:** $\spn(v_1,\ldots,v_m)$ = all linear combinations of the $v_i$ — "everything you can reach." Always a subspace.
+**Span:** $\spn(v_1,\ldots,v_m)$ = all linear combinations of the $v_i$, i.e. "everything you can reach." Always a subspace.
 
 **Linear independence:** $v_1,\ldots,v_n$ are linearly independent iff $\sum a_i v_i = 0 \Rightarrow a_1 = \cdots = a_n = 0$, meaning the only way to write the $0$ vector is as a sum of zeros. Equivalently: there is a *unique* way to write any given vector in $\spn(v_1,..,v_n)$.
 
@@ -44,6 +46,8 @@ The sum is a **direct sum**, written $V_1 \oplus \cdots \oplus V_m$, iff every e
 
 **Dimension:** Any two bases have the same length, called $\dim V$.
 :::
+
+The following lemma is incredibly intuitive yet powerful. It says, in words, that if a list of vectors is redundant in the sense of linear dependence, you can find a *first* redundant one whose removal doesn't affect the span.
 
 :::lemma{#linear-independence-lemma title="Linear Independence Lemma"}
 If $v_1,\ldots,v_m$ is linearly *dependent*, then $\exists\, k$ with $v_k \in \spn(v_1,\ldots,v_{k-1})$. Removing $v_k$ leaves the span unchanged.
@@ -81,9 +85,9 @@ The following results are used constantly and should be internalized.
 :::proof
 (1): *Any two bases have the same length.* Let $B_1$ and $B_2$ be two bases of $V$. Since $B_1$ is linearly independent and $B_2$ spans $V$, the length inequality gives $|B_1| \leq |B_2|$. By symmetry $|B_2| \leq |B_1|$. Hence $|B_1| = |B_2|$.
 
-(2): *Every spanning list contains a basis.* Given a spanning list, if it is already linearly independent we are done. Otherwise, apply the Independence Lemma: remove a redundant vector without changing the span. Repeat until the list is linearly independent. The result is a basis.
+(2): *Every spanning list contains a basis.* Given a spanning list, if it is already linearly independent we are done. Otherwise, apply the Independence Lemma: remove a redundant vector without changing the span. Since each step keeps the span unchanged, the process cannot go on indefinitely (the empty list has no span) and must terminate. When it terminates, we are left with a linearly independent list that is spanning; i.e. a basis.
 
-(3): *Every linearly independent list extends to a basis.* Start with a linearly independent list $v_1,\ldots,v_m$. If it already spans $V$, done. Otherwise pick $w \notin \spn(v_1,\ldots,v_m)$ and append it — the extended list is still linearly independent (if a combination including $w$ vanished, we could solve for $w$ in terms of the others, contradicting $w \notin \spn$). Repeat until spanning. This terminates because any linearly independent list has length $\leq \dim V$.
+(3): *Every linearly independent list extends to a basis.* Start with a linearly independent list $v_1,\ldots,v_m$. If it already spans $V$, done. Otherwise pick $w \notin \spn(v_1,\ldots,v_m)$ and append it. The extended list is still linearly independent (if a combination including $w$ vanished, we could solve for $w$ in terms of the others, contradicting $w \notin \spn$). Repeat until spanning. This terminates because any linearly independent list has length $\leq \dim V$.
 
 (4) and (5): A linearly independent list of length $\dim V$ automatically spans $V$ (since adding any vector would make the list too long to be independent, hence that vector is already in the span). Dually, a spanning list of length $\dim V$ must be linearly independent (since a dependent spanning list contains a basis of length $< \dim V$, contradicting (1)).
 :::
@@ -103,6 +107,8 @@ Let $u_1,\ldots,u_k$ be a basis of $U \cap W$. Extend to a basis $u_1,\ldots,u_k
 
 ## Linear Maps
 
+Linear maps constitute the heart of Linear Algebra. These are functions from one vector space to another that preserve the domain space's structure.
+
 :::definition{#linear-map-and-operator title="Linear Map and Operator"}
 $T : V \to W$ is a **linear map** (write $T \in \Lcal(V,W)$) iff:
 
@@ -120,7 +126,7 @@ Given a basis $v_1,\ldots,v_n$ of $V$ and *any* vectors $w_1,\ldots,w_n \in W$, 
 :::proof
 Define $T\bigl(\sum_i a_i v_i\bigr) := \sum_i a_i w_i$; this is clearly linear. Uniqueness: two linear maps that agree on a basis agree on every linear combination, hence on all of $V$.
 
-*Significance:* A linear map is completely determined by where it sends basis vectors, and there is *total freedom* in that choice. This is why "define $T$ by $Tv_i = w_i$" is a valid proof technique throughout linear algebra.
+*Significance:* A linear map is completely determined by where it sends a set of basis vectors, and there is *total freedom* in that choice. This is why "define $T$ by $Tv_i = w_i$" is a valid proof technique throughout linear algebra.
 :::
 
 :::definition{#null-space-and-range title="Null Space and Range"}
@@ -133,6 +139,8 @@ $$
 Both are subspaces. $T$ **injective** $\iff \nul(T) = \{0\}$;  $T$ **surjective** $\iff \rng(T) = W$.
 :::
 
+The following result is so important that it is named a *Fundamental Theorem*.
+
 :::theorem{#fundamental-theorem-of-linear-maps-rank title="Fundamental Theorem of Linear Maps (Rank-Nullity)"}
 For $T \in \Lcal(V,W)$ with $V$ finite-dimensional:
 
@@ -140,11 +148,11 @@ $$
 \boxed{\dim V \;=\; \dim\nul(T) \;+\; \dim\rng(T).}
 $$
 
-In words: dimension of domain = (dimensions killed) + (dimensions created).
+In words: dimension of domain = (dimensions destroyed) + (dimensions created).
 :::
 
 :::proof
-Let $u_1,\ldots,u_m$ be a basis of $\nul(T)$. Extend to a basis of $V$: $u_1,\ldots,u_m,v_1,\ldots,v_k$.
+Let $u_1,\ldots,u_m$ be a basis of $\nul(T)$, so that $\dim\nul(T) = m$. Extend this to a basis of $V$: $u_1,\ldots,u_m,v_1,\ldots,v_k$. This is possible by [[#basis-existence-and-dimension-facts]].
 
 **Claim:** $Tv_1,\ldots,Tv_k$ is a basis for $\rng(T)$.
 
@@ -159,30 +167,54 @@ Therefore $\dim\rng(T) = k$, and $\dim V = m + k = \dim\nul(T) + \dim\rng(T)$.
 
 - $\dim V > \dim W$: $T$ is never injective (null space must be nontrivial).
 - $\dim V < \dim W$: $T$ is never surjective (range can't fill $W$).
-- $T \in \Lcal(V)$ (same domain and codomain): injective $\iff$ surjective $\iff$ invertible. *This is why square matrices are either invertible or singular — no middle ground.*
+- $T \in \Lcal(V)$ (same domain and codomain): injective $\iff$ surjective $\iff$ invertible. *This is why square matrices are either invertible or singular.*
 
 :::
 
 ### The Matrix of a Linear Map
 
+The following definition is among the most central of ideas. Viewing matrices as encoding linear transformations *with respect to specific bases of the domain and codomain*, rather than as a bunch of numbers, makes all subsequent statements about them arise far more naturally. 
+
 :::definition{#matrix-of-a-linear-map title="Matrix of a Linear Map"}
-Let $T \in \Lcal(V,W)$ with bases $\{v_k\}_{k=1}^n$ for $V$ and $\{w_j\}_{j=1}^m$ for $W$. The **matrix of $T$**, written $\Mop(T)$, is the $m \times n$ matrix whose $(j,k)$-entry is defined by:
+Let $T \in \Lcal(V,W)$ with bases $\{v_k\}_{k=1}^n$ for $V$ and $\{w_j\}_{j=1}^m$ for $W$. The **matrix of $T$ with respect to these bases**, written $\Mop(T, (v_1,\dots,v_n), (w_1,\dots,w_m))$, is the $m \times n$ matrix whose $(j,k)$-entry is defined by:
 
 $$
 Tv_k = \sum_{j=1}^m \Mop(T)_{j,k}\; w_j \qquad \text{for each } k = 1,\ldots,n.
 $$
 
 **Column $k$ of $\Mop(T)$ = the coordinates of $Tv_k$ in the $\{w_j\}$-basis.**
-
-The **matrix of a vector** $v = \sum_i b_i v_i$ is the coordinate column vector $\Mop(v) = (b_1,\ldots,b_n)^T$.
 :::
 
-The picture below tells the full story. $\Mop(T)$ is an $m \times n$ array whose column $k$ stores $\Mop(Tv_k)$ — the image of the $k$-th domain basis vector, encoded in the codomain basis $\{w_j\}$. Multiplying by $\Mop(v) = (b_1,\ldots,b_n)^T$ takes the linear combination of these columns with coefficients $b_k$, which is exactly the encoding of $Tv$:
+One can define addition and scalar multiplication with matrices in the obvious way. 
+
+Suppose $S,T \in \Lcal(V,W)$ and $\lambda \in \F$. There are two immediate conclusions we can draw from this definition:
+1. $\Mop(S+T) = \Mop(S)+\Mop(T)$
+2. $\Mop(\lambda T) = \lambda\Mop(T)$
+
+These show the matrix representation itself is linear. 
+
+:::definition{#matrix-of-a-vector title="Matrix of a Vector"}
+Let $V$ be a vector space with basis $\{v_k\}_{k=1}^n$. Let $v \in V$ with respresentation $v = \sum_i b_i v_i$ with respect to this basis. The **matrix of vector $v$ with respect to this basis** is the coordinate column vector $\Mop(v) = (b_1,\ldots,b_n)^T$.
+:::
+
+:::definition{#matrix-vector-multiplication title="Muplication of the matrix of a linear map and the matrix of a vector"}
+Let $T, \Mop(T), \Mop(v)$ be defined as in the preceding two definitions. The multiplication of $\Mop(T)$ and $\Mop(v)$ is defined as the linear combination of the columns of $\Mop(T)$ with column $i$ receiving weight corresponding to the $i$-th row of $\Mop(v)$.
+:::
+
+The picture below tells the full story. $\Mop(T)$ is an $m \times n$ array of numbers whose $k$-th column stores $\Mop(Tv_k)$, the image of the $k$-th domain basis vector under the linear transformation $T$, encoded in the codomain basis $\{w_j\}$. 
+
+Multiplication of the matrix of a linear map $\Mop(T)$ by the matrix of a vector $\Mop(v)$ is *defined* so as to produce the matrix of the image vector $\Mop(Tv)$, **with respect to the chosen codomain basis**. See [[#action-of-a-linear-map-matrix]]. Note that this will only be the case when the domain basis assumed by $\Mop(T)$ matches the basis assumed by $\Mop(v)$.
+
 
 <figure class="fig">
   <img src="/figures/linear-algebra/matrix-of-linear-map.svg" alt="The matrix of a linear map acting on a coordinate vector">
 </figure>
 
+:::theorem{#action-of-a-linear-map-matrix title="Action of a Linear Map = Matrix Multiplication: $\Mop(Tv) = \Mop(T)\Mop(v)$"}
+With any choice of bases for $V$ and $W$: the matrix of $Tv$ (the output vector's coordinates) equals $\Mop(T)$ times the matrix of $v$ (the input vector's coordinates). That is, applying $T$ to a vector corresponds to multiplying its coordinate vector by $\Mop(T)$.
+:::
+
+:::proof
 Reading the result column and using linearity twice:
 
 $$
@@ -192,20 +224,17 @@ $$
   \;=\; \Mop(Tv).
 $$
 
-The first equality is the "linear combination of columns" view of matrix–vector multiplication (visible in the diagram); the second is linearity of the coordinate map $\Mop(\cdot)$; the third is linearity of $T$ applied to $v = \sum_k b_k v_k$. This is the content of [[#action-of-a-linear-map-matrix]] below.
+The first equality is the "linear combination of columns" view of matrix–vector multiplication (visible in the diagram); the second is linearity of the coordinate map $\Mop(\cdot)$; the third is linearity of $T$ applied to $v = \sum_k b_k v_k$.
+:::
 
 :::theorem{#matrix-multiplication-represents-composition title="Matrix Multiplication Represents Composition: $\Mop(ST) = \Mop(S)\Mop(T)$"}
-Matrix multiplication is **defined so as to** satisfy $\Mop(S \circ T) = \Mop(S)\Mop(T)$. This is the fundamental justification for the definition of matrix multiplication — it is not a formula that drops from the sky.
+Matrix multiplication is **defined so as to** satisfy $\Mop(S \circ T) = \Mop(S)\Mop(T)$. This is the fundamental justification for the definition.
 :::
 
 :::proof
-Let $T : U \to V$, $S : V \to W$ with $\Mop(T) = B$ ($n$-col.) and $\Mop(S) = A$ ($m$-col.). Choose bases $\{u_\ell\}$, $\{v_i\}$, $\{w_j\}$. Compute the coefficient of $w_j$ in $(ST)u_k$:
-$$
-\begin{aligned}
-  (ST)u_k &= S\!\left(\sum_i B_{i,k}\, v_i\right) = \sum_i B_{i,k}\,Sv_i = \sum_i B_{i,k} \sum_j A_{j,i}\,w_j = \sum_j \!\Bigl(\underbrace{\sum_i A_{j,i} B_{i,k}}_{(AB)_{j,k}}\Bigr)\!w_j.
-\end{aligned}
-$$
-The coefficient of $w_j$ in column $k$ is exactly the $(j,k)$ entry of $AB$. So $\Mop(ST) = \Mop(S)\Mop(T)$.
+Let $T : U \to V$, $S : V \to W$. Choose bases $\{u_\ell\}$, $\{v_i\}$, $\{w_j\}$. 
+
+We know column $k$ of $\Mop(T)$ is defined to be $\Mop(Tu_k)$, the representation of $Tu_k$ in the $\{v_i\}$ basis. Column $k$ of $\Mop(S)\Mop(T)$ will therefore be equal to $\Mop(S)\Mop(Tu_k)$, by the definition of matrix multiplication. Applying [[#action-of-a-linear-map-matrix]], this tells us column $k$ of $\Mop(S)\Mop(T)$ is $\Mop(S(Tu_k))$, which by associativity of linear maps is equal to $\Mop((ST)u_k)$. By definition, then $\Mop(S)\Mop(T)$ is the matrix of the linear map $ST$; that is, $\Mop(S)\Mop(T)=\Mop(ST)$.
 :::
 
 :::remark
@@ -214,25 +243,7 @@ Three views of matrix multiplication worth memorizing:
 - Entry $(j,k)$ of $AB$ = dot product of row $j$ of $A$ with column $k$ of $B$.
 - Column $k$ of $AB$ = $A$ times column $k$ of $B$.
 - $Ab$ = linear combination of the columns of $A$ with coefficients from $b$.
-
-The third view is the one that makes the proof of $\Mop(Tv) = \Mop(T)\Mop(v)$ transparent (see next theorem).
 :::
-
-:::theorem{#action-of-a-linear-map-matrix title="Action of a Linear Map = Matrix Multiplication: $\Mop(Tv) = \Mop(T)\Mop(v)$"}
-With any choice of bases for $V$ and $W$: the matrix of $Tv$ (the output vector's coordinates) equals $\Mop(T)$ times the matrix of $v$ (the input vector's coordinates). That is, applying $T$ to a vector corresponds to multiplying its coordinate vector by $\Mop(T)$.
-:::
-
-:::proof
-Write $v = \sum_i b_i v_i$, so $\Mop(v) = (b_1,\ldots,b_n)^T$. By linearity:
-
-$$
-\Mop(Tv) = \Mop\!\Bigl(\sum_i b_i Tv_i\Bigr) = \sum_i b_i \,\Mop(Tv_i) = \sum_i b_i \cdot (\text{column }i\text{ of }\Mop(T)) = \Mop(T)\,\Mop(v).
-$$
-
-The last step uses the "column $k$ of $AB$" view: $\Mop(T)\Mop(v)$ is a linear combination of the columns of $\Mop(T)$ with coefficients $b_i$ — exactly $\sum_i b_i\,\Mop(Tv_i)$.
-:::
-
-The two results $\Mop(ST)=\Mop(S)\Mop(T)$ and $\Mop(Tv)=\Mop(T)\Mop(v)$ say: *the matrix picture is a perfect coordinate model of the abstract picture.*
 
 :::theorem{#column-rank-row-rank title="Column Rank $=$ Row Rank"}
 For any $m \times n$ matrix $A$: $\dim(\text{span of columns}) = \dim(\text{span of rows})$, and both equal $\dim\rng(T_A)$ where $T_A : \F^n \to \F^m$ is the associated linear map.
@@ -277,19 +288,15 @@ $$
 
 Reading right to left: $Q$ converts $\beta$-coordinates to $\varepsilon$-coordinates; $[T]_\varepsilon$ applies $T$ in $\varepsilon$-coordinates; $Q^{-1}$ converts the result back to $\beta$-coordinates.
 
-This is just $\Mop(ST) = \Mop(S)\Mop(T)$ applied to the factorization $T = (\text{convert }\varepsilon\to\beta) \circ (\text{apply }T\text{ in }\varepsilon) \circ (\text{convert }\beta\to\varepsilon)$.
+Note that this theorem contains nothing novel. It is just the composition rule $\Mop(ST) = \Mop(S)\Mop(T)$ applied to the factorization $T = (\text{convert }\varepsilon\to\beta) \circ (\text{apply }T\text{ in }\varepsilon) \circ (\text{convert }\beta\to\varepsilon)$.
 
 **Orthonormal case.** If $v_1,\ldots,v_n$ are orthonormal, then $(Q^TQ)_{ij} = \ip{v_i}{v_j} = \delta_{ij}$, so $Q^TQ = I$, i.e., $Q^{-1} = Q^T$.
-:::
-
-:::moral
-Change of basis is not a new theorem — it is the composition rule $\Mop(ST) = \Mop(S)\Mop(T)$, with identity maps as bookkeeping. The key payoff: the Real Spectral Theorem ([[#real-spectral-theorem]]) says $A = Q\Lambda Q^T$, which is *exactly* the change-of-basis formula for a self-adjoint operator expressed in its eigenvector basis. In the eigenvector basis, $T$ has the diagonal matrix $\Lambda$; $Q$ converts between that basis and the standard one; and orthonormality of the eigenvectors buys us $Q^{-1} = Q^T$ for free.
 :::
 
 ## Eigenvalues and Polynomials
 
 :::definition{#eigenvalue-and-eigenvector title="Eigenvalue and Eigenvector"}
-$\lambda \in \F$ is an **eigenvalue** of $T \in \Lcal(V)$ if $\exists\, v \neq 0$ with $Tv = \lambda v$. Such $v$ is an **eigenvector** for $\lambda$. The **eigenspace** $E(\lambda,T) = \nul(T - \lambda I)$.
+$\lambda \in \F$ is an **eigenvalue** of $T \in \Lcal(V)$ if $\exists\, v \neq 0$ with $Tv = \lambda v$. Such $v$ is an **eigenvector** for $\lambda$. The **eigenspace** for the eigenvalue is defined as $E(\lambda,T) = \set{v : Tv = \lambda v}  = \nul(T - \lambda I)$.
 
 The following are equivalent (for operators on finite-dimensional spaces, by rank-nullity):
 
@@ -297,7 +304,10 @@ The following are equivalent (for operators on finite-dimensional spaces, by ran
 - $T - \lambda I$ is not injective ($\iff$ has nontrivial null space).
 - $T - \lambda I$ is not surjective.
 - $T - \lambda I$ is not invertible.
+:::
 
+:::remark
+Eigenvalues and eigenvalues are of intersest in the study of linear maps because the eigenspaces $E(\lambda, T)$ for various $\lambda$ correspond to 1-dimensional subspaces left *invariant* by the transformation.
 :::
 
 :::theorem{#eigenvectors-for-distinct-eigenvalues-are-linearly title="Eigenvectors for Distinct Eigenvalues Are Linearly Independent"}
@@ -312,8 +322,10 @@ $$
 $$
 
 Since $\lambda_i \neq \lambda_m$ for $i < m$, all factors $(\lambda_i - \lambda_m) \neq 0$, so this is a nontrivial dependence among $v_1,\ldots,v_{m-1}$ — contradicting minimality of $m$.
+:::
 
-*Corollary:* An operator on $V$ has *at most* $\dim V$ distinct eigenvalues (a linearly independent list has length $\leq \dim V$).
+:::corollary{#eigenvalue-numerical-limit title="Operator cannot have more eigenvalues than dimension of vector space"}
+An operator on $V$ has *at most* $\dim V$ distinct eigenvalues (a linearly independent list has length $\leq \dim V$).
 :::
 
 :::theorem{#minimal-polynomial title="Minimal Polynomial"}
@@ -330,11 +342,7 @@ Over $\C$: $p(z) = (z - \lambda_1)\cdots(z-\lambda_m)$ for eigenvalues $\lambda_
 
 :::
 
-:::remark
-**Why these notes avoid the characteristic polynomial:** The standard definition $\det(A - \lambda I)$ requires determinants, which are deliberately deferred here. The minimal polynomial approach is cleaner: it characterizes eigenvalues algebraically without needing determinants, and the statement "eigenvalues = zeros of minimal polynomial" is arguably more fundamental.
-:::
-
-:::theorem{#supplementary-no-hidden-eigenvalues title="Supplementary: No Hidden Eigenvalues"}
+:::theorem{#supplementary-no-hidden-eigenvalues title="No Hidden Eigenvalues"}
 If $T$ has an ONB of eigenvectors $e_1,\ldots,e_n$ with eigenvalues $\mu_1,\ldots,\mu_n$, then *every* eigenvalue of $T$ is among $\mu_1,\ldots,\mu_n$.
 :::
 
@@ -436,6 +444,10 @@ So each new $f_k$ is orthogonal to all previous $f_j$.
 *Span equality:* By induction. Base case $k=1$: $\spn(v_1) = \spn(f_1)$ trivially. Inductive step: $f_{k+1} = v_{k+1} - (\text{element of }\spn(f_1,\ldots,f_k))$, so $f_{k+1} \in \spn(v_1,\ldots,v_{k+1})$. Rearranging shows $v_{k+1} \in \spn(f_1,\ldots,f_{k+1})$. By inductive hypothesis $\spn(f_1,\ldots,f_k) = \spn(v_1,\ldots,v_k)$, so $\spn(f_1,\ldots,f_{k+1}) = \spn(v_1,\ldots,v_{k+1})$.
 :::
 
+:::remark
+In the definition of $f_k$, each RHS term $\frac{\ip{v_k}{f_j}}{\nm{f_j}^2}\,f_j$ is actaully just the projection of $v_k$ onto the 1-d subspace spanned by $f_j$. As such, $f_k$ is manufactured to be orthogonal to each $f_j$. See [[#orthogonal-projection]].
+:::
+
 :::theorem{#consequences-of-gram-schmidt title="Consequences of Gram-Schmidt"}
 
 - Every finite-dimensional IPS has an ONB (apply G-S to any basis).
@@ -470,7 +482,10 @@ $$
 :::
 
 :::remark
-**Why Riesz matters:** It is the key tool used to *define* the adjoint $T^*$ in the next chapter. For fixed $w \in W$, the map $v \mapsto \ip{Tv}{w}$ is a linear functional on $V$. Riesz guarantees a unique vector in $V$ representing it — that vector is defined to be $T^*w$. Without Riesz, defining $T^*$ abstractly would require coordinates.
+**Why Riesz matters:** It is the key tool used to *define* the adjoint $T^*$ in the next chapter. For fixed $w \in W$, the map $v \mapsto \ip{Tv}{w}$ is a linear functional on $V$. Riesz guarantees a unique vector in $V$ representing it. That vector is defined to be $T^*w$.
+
+Another innocent application of Riesz appears in calculus. For $f : V \to \R$ ($V$ a finite-dimensional inner product space), the derivative of $f$ at $x$ is a linear functional: the unique $f'(x) \in \Lcal(V,\R)$ with $$f(x + \delta x) - f(x) = f'(x)\delta x + o(\nm{\delta x}).$$
+By Riesz (6.42), this functional is an inner product against a unique vector, *defined* to be the gradient: $f'(x)\delta x = \ip{\delta x}{\nabla f(x)}, \forall \delta x \in V$. This viewpoint has two payoffs: (i) the interpretation of the gradient as the direction of steepest ascent follows immediately from Cauchy-Schwarz: $\ip{\delta x}{\nabla f(x)} \leq \nm{\delta x}\,\nm{\nabla f(x)}$, with equality iff $\delta x \parallel \nabla f(x)$; (ii) the gradient depends on the *choice of inner product*, while the derivative does not; change the inner product and the same $f'(x)$ gets a different Riesz vector. (``Natural gradient'' methods in ML exploit this.)
 :::
 
 :::definition{#orthogonal-complement title="Orthogonal Complement"}
@@ -503,7 +518,7 @@ The first piece lies in $U$ (it's a combination of the ONB for $U$); the second 
 :::
 
 :::definition{#orthogonal-projection title="Orthogonal Projection"}
-For a subspace $U \subseteq V$, write each $v \in V$ uniquely as $v = u + w$ with $u \in U$, $w \in U^\perp$. The **orthogonal projection onto $U$** is the operator $P_U \in \Lcal(V)$ defined by $P_U v = u$.
+For a subspace $U \subseteq V$, write each $v \in V$ uniquely as $v = u + w$ with $u \in U$, $w \in U^\perp$ (this is possible by [[#orthogonal-direct-sum-decomposition]]). The **orthogonal projection onto $U$** is the operator $P_U \in \Lcal(V)$ defined by $P_U v = u$.
 
 **Special case** ($U = \spn\{u_0\}$, one-dimensional):
 
@@ -514,7 +529,7 @@ $$
 :::
 
 :::proof{title="of 1-d formula"}
-We need $\lambda$ such that $v - \lambda u_0 \perp u_0$:
+We know $v - P_Uv \perp U$. So we need $\lambda$ such that $v - \lambda u_0 \perp u_0$:
 $\ip{v - \lambda u_0}{u_0} = 0 \Rightarrow \ip{v}{u_0} = \lambda\nm{u_0}^2 \Rightarrow \lambda = \ip{v}{u_0}/\nm{u_0}^2$.
 :::
 
@@ -546,7 +561,7 @@ Equality iff $\nm{P_U v - u}^2 = 0$, i.e., $u = P_U v$.
 This is one of the most useful theorems in applied mathematics. Examples:
 
 - **Polynomial approximation:** Best $k$-th degree polynomial approximation to $\sin(x)$ in $L^2[-\pi,\pi]$ = orthogonal projection onto $\spn\{1, x, \ldots, x^k\}$.
-- **OLS regression:** The least-squares estimate $\hat\beta = (X^TX)^{-1}X^Ty$ gives $\hat y = X\hat\beta = P_{\rng(X)} y$ — the projection of $y$ onto the column space of $X$.
+- **OLS regression:** The least-squares estimate $\hat\beta = (X^TX)^{-1}X^Ty$ gives $\hat y = X\hat\beta = P_{\rng(X)} y$, the projection of $y$ onto the column space of $X$.
 
 :::
 
@@ -567,7 +582,7 @@ $$
 T^+ w \;=\; \Bigl(T\big|_{(\nul T)^\perp}\Bigr)^{-1}\!\! P_{\rng T}\,w \qquad \forall\, w \in W.
 $$
 
-*Recipe:* project $w$ onto $\rng(T)$, then take the unique preimage in $(\nul T)^\perp$.
+*Intuition:* project $w$ onto $\rng(T)$, then take the unique preimage in $(\nul T)^\perp$.
 :::
 
 :::theorem{#properties-of-the-pseudoinverse title="Properties of the Pseudoinverse"}
@@ -579,8 +594,12 @@ $$
 
 :::
 
-:::remark
-Property (b): $TT^+w = T \bigl(T|_{(\nul T)^\perp}^{-1} P_{\rng T} w\bigr) = P_{\rng T} w$ since we undo $T^{-1}$ by $T$, exactly on the range. Property (c): $T^+Tv = T^+Tu$ where $v = u + n$, $u \in (\nul T)^\perp$, $n \in \nul T$; then $T^+Tu = u = P_{(\nul T)^\perp}v$. Property (d) encapsulates OLS: the solution to $Tv \approx w$ is $v = T^+w$.
+:::proof
+Property (a): Obvious: if $T$ is invertible, $(\nul T)^\perp$ is the whole space.
+
+Property (b): $TT^+w = T \bigl(T|_{(\nul T)^\perp}^{-1} P_{\rng T} w\bigr) = P_{\rng T} w$ since we undo $T^{-1}$ by $T$, exactly on the range. 
+
+Property (c): $T^+Tv = T^+Tu$ where $v = u + n$, $u \in (\nul T)^\perp$, $n \in \nul T$; then $T^+Tu = u = P_{(\nul T)^\perp}v$. 
 :::
 
 ## Operators on Inner Product Spaces: The Adjoint
@@ -592,7 +611,7 @@ $$
 \ip{Tv}{w} = \ip{v}{T^*w} \qquad \forall v \in V,\; w \in W.
 $$
 
-*Existence (via Riesz):* For fixed $w$, the map $v \mapsto \ip{Tv}{w}$ is a linear functional on $V$. By the Riesz Representation Theorem, there is a unique vector in $V$ representing it — *define* that vector to be $T^*w$. This is why Riesz was proved first.
+*Existence (via Riesz):* For fixed $w$, the map $v \mapsto \ip{Tv}{w}$ is a linear functional on $V$. By the Riesz Representation Theorem ([[#riesz-representation-theorem]]), there is a unique vector in $V$ representing it.*Define* that vector to be $T^*w$.
 :::
 
 :::theorem{#properties-of-the-adjoint title="Properties of the Adjoint"}
@@ -626,7 +645,7 @@ $$
 \Mop(T^*)_{k,j} = \overline{\Mop(T)_{j,k}}, \qquad\text{i.e., }\; \Mop(T^*) = \Mop(T)^* \;(= \Mop(T)^T\text{ over }\R).
 $$
 
-**Critical caveat:** This only holds for ONBs. For general bases, the matrix of $T^*$ is *not* the conjugate transpose.
+**Caveat:** This only holds for ONBs. For general bases, the matrix of $T^*$ is *not* the conjugate transpose.
 :::
 
 :::proof
@@ -639,7 +658,7 @@ $$
 :::
 
 :::remark
-This is the bridge between abstract and concrete: in the abstract, $T^*$ is defined by the inner product identity $\ip{Tv}{w} = \ip{v}{T^*w}$. In coordinates (ONB), it is the conjugate transpose. The proof above shows these are the same thing.
+This is the bridge between the abstract and the concrete: in the abstract, $T^*$ is defined by the inner product identity $\ip{Tv}{w} = \ip{v}{T^*w}$. In coordinates (ONB), it is the conjugate transpose.
 :::
 
 ## Self-Adjoint and Normal Operators
@@ -686,7 +705,7 @@ $$
 
 So $S$ is normal too. Now $Sv = Tv - \lambda v = 0$. Since $S$ is normal: $\nm{Sv} = \nm{S^*v}$, so $S^*v = 0$, giving $T^*v = \bar\lambda v$.
 
-*Intuition:* For a normal operator, eigenvectors of $T$ are automatically eigenvectors of $T^*$ (with conjugate eigenvalue). This is what makes the complex spectral theorem work: eigenspaces of distinct eigenvalues are orthogonal, since for $Tv = \lambda v$ and $Tw = \mu w$ with $\lambda \neq \mu$: $\lambda\ip{v}{w} = \ip{Tv}{w} = \ip{v}{T^*w} = \ip{v}{\bar\mu w} = \mu\ip{v}{w}$, forcing $\ip{v}{w} = 0$.
+*Intuition:* For a normal operator, eigenvectors of $T$ are automatically eigenvectors of $T^*$ (with conjugate eigenvalue).
 :::
 
 ## Spectral Theorems
@@ -725,7 +744,7 @@ Define the *Rayleigh quotient* $f(v) = \ip{Tv}{v}$ restricted to the unit sphere
 
 **Claim:** $v_1$ is an eigenvector with eigenvalue $\lambda_1$.
 
-Write $Tv_1 = \lambda_1 v_1 + u$ where $u \perp v_1$ (decompose $Tv_1$ into its $v_1$-component and orthogonal remainder). We want to show $u = 0$.
+Write $Tv_1 = \lambda_1 v_1 + u$ where $u \perp v_1$ (decompose $Tv_1$ into its $v_1$-component and orthogonal remainder; this is possible by [[#orthogonal-direct-sum-decomposition]]). We want to show $u = 0$. The plan of attack is to show that if $u$ were nonzero, then the function $f$ could be increased in the $u$-direction, which would be a contradiction by the definition of $v_1$.
 
 Consider the curve on the unit sphere: $v(t) = \frac{v_1 + tu}{\nm{v_1 + tu}}$. Since $u \perp v_1$: $\nm{v_1 + tu}^2 = 1 + t^2\nm{u}^2$. Compute $f(v(t))$:
 
@@ -776,16 +795,10 @@ By the inductive hypothesis, $T|_W$ has an ONB of eigenvectors $\{v_2,\ldots,v_n
 The combined list $\{v_1, v_2,\ldots,v_n\}$ is an ONB for $V$: each $v_i$ is a unit vector; $v_1 \perp v_j$ for $j \geq 2$ (since $v_j \in W = \{v_1\}^\perp$); $v_i \perp v_j$ for $i,j \geq 2$ (by IH); and they span $V$ ($v_1$ plus an ONB for $W$ spans all of $V$).
 :::
 
-:::moral
-**What the spectral theorem says geometrically:** In the eigenvector basis $\{v_k\}$, the self-adjoint operator $T$ is a pure coordinate-wise rescaling: it stretches direction $v_k$ by the real factor $\lambda_k$, with no mixing between directions. This is the sense in which self-adjoint operators are "as diagonal as possible."
+:::remark
+**Geometric interpretation:** In the eigenbasis $\{v_k\}$, the self-adjoint operator $T$ is a pure coordinate-wise rescaling: it stretches each direction $v_k$ by the real factor $\lambda_k$.
 
-**Why self-adjointness is the right hypothesis:**
-
-- It gives real eigenvalues (Step 1 needs $f(v) \in \R$ to maximize; Step 2 uses $\lambda, \mu \in \R$ to cancel cleanly).
-- It gives the cross-term identity $\ip{Tv_1}{u} = \nm{u}^2$ (without $T = T^*$ this calculation collapses).
-- It ensures $T|_W$ is self-adjoint (making induction work — without this, the restriction could fail to be self-adjoint).
-
-**Statistics / finance connection:** Every covariance matrix $\Sigma = \frac{1}{m-1}X^TX$ is real symmetric PSD. The spectral theorem gives $\Sigma = Q\Lambda Q^T$: there exist $n$ orthogonal uncorrelated directions (the eigenvectors $v_k$) along which the variance is $\lambda_k$. This is the foundation of PCA.
+**Statistics connection:** Every covariance matrix $\Sigma = \frac{1}{m-1}X^TX$ is real symmetric PSD. The spectral theorem gives $\Sigma = Q\Lambda Q^T$: there exist $n$ orthogonal uncorrelated directions (the eigenvectors $v_k$) along which the variance is $\lambda_k$. This is the foundation of PCA.
 :::
 
 ## Positive Operators, Square Roots, and Isometries
@@ -856,12 +869,12 @@ Thus $T$ is positive.
 :::
 
 :::remark
-**Every condition applies to a covariance matrix.** A sample covariance matrix $\Sigma = X^TX$ (centered data $X$) satisfies (f) *by construction* with $R = X$. The theorem then delivers all the other conditions for free, and each one is something you use in statistics:
+**Every condition applies to a covariance matrix.** A sample covariance matrix $\Sigma = X^TX$ (centered data $X$) satisfies (f) by construction with $R = X$. The theorem then yields all the other conditions for free, and each one is something of relevance in statistics:
 
-- (a): $v^T\Sigma v \geq 0$ — the variance of the projection of the data onto direction $v$ is nonnegative. (This quadratic form *is* the variance along $v$.)
-- (b): all eigenvalues $\lambda_k \geq 0$ — principal component variances are nonnegative.
-- (c): $\Sigma = Q\Lambda Q^T$ diagonalizes with $\Lambda \geq 0$ — the PCA decomposition.
-- (d): the positive square root $\Sigma^{1/2}$ exists — used to sample from the multivariate normal: $x = \mu + \Sigma^{1/2}z$ with $z \sim \mathcal{N}(0, I)$ gives $x \sim \mathcal{N}(\mu, \Sigma)$.
+- (a): $v^T\Sigma v \geq 0$: the variance of the projection of the data onto direction $v$ is nonnegative. (This quadratic form *is* the variance along $v$.)
+- (b): all eigenvalues $\lambda_k \geq 0$: principal component variances are nonnegative.
+- (c): $\Sigma = Q\Lambda Q^T$ diagonalizes with $\Lambda \geq 0$: the PCA decomposition.
+- (d): the positive square root $\Sigma^{1/2}$ exists: this is used to sample from the multivariate normal: $x = \mu + \Sigma^{1/2}z$ with $z \sim \mathcal{N}(0, I)$ gives $x \sim \mathcal{N}(\mu, \Sigma)$.
 - (f): conversely, *any* PSD matrix is a covariance matrix of some dataset (take $X = \Sigma^{1/2}$), so PSD-ness exactly characterizes covariance matrices.
 
 :::
@@ -877,18 +890,43 @@ Every PSD operator $T$ has a **unique** PSD square root: a PSD operator $R$ with
 :::
 
 :::definition{#isometry title="Isometry"}
-$S \in \Lcal(V,W)$ is an **isometry** if $\nm{Sv} = \nm{v}$ for all $v \in V$. Equivalently $S^*S = I$. All isometries are injective.
+$S \in \Lcal(V,W)$ is an **isometry** if $\nm{Sv} = \nm{v}$ for all $v \in V$; that is, if $S$ *preserves lengths *. Equivalently $S^*S = I$. All isometries are injective.
 
 If $\dim V = \dim W$: isometry $\iff$ **unitary** ($SS^* = S^*S = I$, i.e., $S^{-1} = S^*$). Over $\R$: unitary $=$ **orthogonal** ($Q^{-1} = Q^T$). All singular values of an isometry equal $1$.
 :::
 
 ## Singular Value Decomposition
 
+:::lemma{#properties-of-t*t title="Properties of $T^*T$"}
+Suppose $T \in \Lcal(V,W)$. Then
+- **(a)** $T^*T$ is a positive operator on $V$
+- **(b)** $\nul T^*T = \nul T$
+- **(c)** $\rng T^*T = \rng T^*$
+- **(d)** $\dim \rng T = \dim \rng T^* = \dim \rng T^*T$
+:::
+
 :::definition{#singular-values title="Singular Values"}
-The **singular values** of $T \in \Lcal(V,W)$ are the nonneg square roots of the eigenvalues of $T^*T$, listed in decreasing order $s_1 \geq s_2 \geq \cdots \geq s_n \geq 0$, each repeated according to $\dim E(\cdot, T^*T)$.
+The **singular values** of $T \in \Lcal(V,W)$ are the nonnegative square roots of the eigenvalues of $T^*T$, listed in decreasing order $s_1 \geq s_2 \geq \cdots \geq s_n \geq 0$, each repeated as many times as the dimension of the corresponding eigenspace $E(\cdot, T^*T)$.
 
 There are exactly $n = \dim V$ singular values. The number of *positive* singular values $= \dim\rng(T)$ (i.e., $= \text{rank}(T)$).
 :::
+
+:::theorem{#role-of-singular-values title="Role of Positive Singular Values"}
+Suppose $T \in \Lcal(V,W)$. Then
+- **(a)** $T$ is injective $\iff$ $0$ is not a singular value of $T$
+- **(b)** the number of positive singular values of $T$ equals $\dim \rng T$
+- **(c)** $T$ is surjective $\iff$ number of positive singular values of $T$ equals $\dim W$ 
+:::
+
+:::proof
+(a): $T$ is injective $ \iff \nul T = \{0\} \iff \nul T^*T = \{0\} \iff 0$ is not an eigenvalue of $T$ $\iff 0$ is not a singular value of $T$.
+
+(b): The spectral theorem applied to $T^*T$ shows $\dim \rng T^*T$ equals the number of positive eigenvalues of $T^*T$ (with repetition). The lemma, then, implies $\dim \rng T$ is equal to the number of positive singular values of $T$.
+
+(c): immediate by (b).
+:::
+
+The next result is incredibly powerful. It shows that *any* linear map between two vector spaces $V$ and $W$ has a beautiful description in terms of its singular values and orthonormal lists in $V$ and $W$.
 
 :::theorem{#singular-value-decomposition-svd title="Singular Value Decomposition (SVD)"}
 Let $T \in \Lcal(V,W)$ with positive singular values $s_1 \geq \cdots \geq s_m > 0$ (and $s_{m+1} = \cdots = s_n = 0$). Then there exist orthonormal lists $e_1,\ldots,e_m$ in $V$ and $f_1,\ldots,f_m$ in $W$ such that:
@@ -896,8 +934,6 @@ Let $T \in \Lcal(V,W)$ with positive singular values $s_1 \geq \cdots \geq s_m >
 $$
 \boxed{Tv \;=\; \sum_{k=1}^m s_k\,\ip{v}{e_k}\,f_k \qquad \forall v \in V.}
 $$
-
-**Outer product form:** $T = \displaystyle\sum_{k=1}^m s_k\, f_k \otimes e_k$ (where $f_k \otimes e_k$ is the rank-1 operator $v \mapsto \ip{v}{e_k}f_k$).
 
 **Matrix form:** $A = U\Sigma V^T$ with $U \in \R^{p\times p}$ orthogonal, $\Sigma \in \R^{p \times n}$ diagonal (nonneg entries), $V \in \R^{n\times n}$ orthogonal.
 :::
@@ -950,26 +986,27 @@ $\ip{Tv}{w} = \sum_k s_k \ip{v}{e_k}\ip{f_k}{w} = \ip{v}{\sum_k s_k \ip{w}{f_k}e
 For $T^+$: it inverts $T$ on the range (map $f_k \mapsto (1/s_k)e_k$) and projects onto the range first. The formula follows directly from the definition of pseudoinverse.
 :::
 
-:::theorem{#eckart-young-theorem-best-low-rank title="Eckart-Young Theorem (Best Low-Rank Approximation)"}
-The best rank-$k$ approximation to $T$ in operator norm is:
-
+:::theorem{#eckart-young-theorem-best-low-rank title="Eckart-Young Theorem (Best Approximation by Linear Map with $\dim \rng \leq k$)"}
+Suppose $T \in \Lcal(V,W)$ and $s_1 \geq \dots \geq s_m$ are the positive singular values of $T$. Suppose $k$ is any integer between $1$ and $m$. Then 
 $$
-T_k = \sum_{i=1}^k s_i\,f_i \otimes e_i, \qquad \nm{T - T_k} = s_{k+1}.
-$$
-
-In matrix form with Frobenius norm ($\nm{A}_F^2 = \sum_{i,j} A_{ij}^2 = \sum_i s_i^2$):
-
-$$
-\min_{\mathrm{rank}(B) \leq k} \nm{A - B}_F^2 = s_{k+1}^2 + s_{k+2}^2 + \cdots + s_n^2,
+\min \{ \nm{T-S} : S \in \Lcal(V,W) \text{ and } \dim \rng S \leq k \} = s_{k+1}.
 $$
 
-attained by $B = U\Sigma_k V^T$ (keep only the top $k$ singular values).
+Furthermore, if
+$$
+Tv = s_1 \ip{v}{e_1}f_1 + \dots + s_m \ip{v}{e_m}f_m
+$$ 
+is a SVD of $T$, then the linear map $T_k \in \Lcal(V,W)$ defined by 
+$$
+T_kv = s_1\ip{v}{e_1}f_1 + \dots + s_k \ip{v}{e_k}f_k
+$$
+has $\dim \rng T_k = k$ and attains the optimal bound. That is, $\nm{T-T_k} = s_{k+1}$.
 :::
 
 :::moral
-**What SVD says:** Every linear map $T : V \to W$ is, in the right pair of orthonormal bases ($\{e_k\}$ for $V$ and $\{f_k\}$ for $W$), a pure diagonal rescaling. The $e_k$-direction is stretched by $s_k$ and mapped to the $f_k$-direction. You need *two* bases because $V \neq W$ in general — unlike the spectral theorem (which is SVD in the special case $V = W$, $T$ self-adjoint, where one basis suffices).
+SVD says every linear map $T : V \to W$ is, in the right pair of orthonormal lists ($\{e_k\}$ for $V$ and $\{f_k\}$ for $W$), a pure diagonal rescaling. The $e_k$-direction is stretched by $s_k$ and mapped to the $f_k$-direction. You need *two* bases because $V \neq W$ in general, unlike the spectral theorem (which is SVD in the special case $V = W$, $T$ self-adjoint, where one basis suffices).
 
-**The geometric skeleton of $T$, $T^*$, $T^+$ is identical:** same $s_k$, $e_k$, $f_k$ — just traversed differently:
+**Connects $T$, $T^*$, $T^+$:** same $s_k$, $e_k$, $f_k$, used differently:
 $$
 \begin{aligned}
   T&: e_k \mapsto s_k f_k \quad \text{(stretch $s_k$, domain to codomain)}\\
@@ -977,15 +1014,6 @@ $$
   T^+&: f_k \mapsto \tfrac{1}{s_k} e_k \quad \text{(invert the stretch, codomain to domain)}
 \end{aligned}
 $$
-
-**Why SVD exists:** $T^*T$ lives on the domain $V$ and encodes all geometry of $T$. Its eigenvectors are the $e_k$; normalizing $Te_k$ gives $f_k$. The existence proof is just the spectral theorem applied to $T^*T$. This is the right way to think about SVD — it is not a numerical miracle, it follows directly from the spectral theorem for PSD operators.
-
-**Practical importance for statistics/finance:**
-
-- Computing PCA via SVD on $X$ (not $X^TX$) is numerically superior: it avoids squaring the condition number.
-- Eckart-Young gives the theoretical basis for dimensionality reduction: the rank-$k$ approximation capturing the most variance is exactly the truncated SVD.
-- Signal-to-noise separation: large singular values = signal; small singular values = noise.
-
 :::
 
 ## Volume, Parallelepipeds, and SVD
@@ -997,7 +1025,7 @@ $$
 P(v_1,\ldots,v_n) \;=\; \bigl\{t_1 v_1 + \cdots + t_n v_n \;\big|\; t_i \in [0,1]\bigr\}.
 $$
 
-A **box** is a parallelepiped $P(r_1 e_1,\ldots,r_n e_n)$ where $e_1,\ldots,e_n$ is an orthonormal basis (ONB) and $r_1,\ldots,r_n \geq 0$. Boxes are the "right-angled" parallelepipeds. The **volume** of such a box is defined to be $r_1 \cdot r_2 \cdots r_n$ — the product of its edge lengths. This agrees with our usual notions of length, area, and volume in dimensions 1, 2, and 3.
+A **box** is a parallelepiped $P(r_1 e_1,\ldots,r_n e_n)$ where $e_1,\ldots,e_n$ is an orthonormal basis (ONB) and $r_1,\ldots,r_n \geq 0$. Boxes are the "right-angled" parallelepipeds. The **volume** of such a box is defined to be $r_1 \cdot r_2 \cdots r_n$, the product of its edge lengths. This agrees with our usual notions of length, area, and volume in dimensions 1, 2, and 3. 
 
 Volume of a general subset $\Omega \subseteq V$ is defined by approximating $\Omega$ by a collection of disjoint boxes and summing their volumes (the standard notion from analysis).
 :::
@@ -1039,14 +1067,14 @@ So $T$ maps every approximating box for $\Omega$ (in the $e_k$-basis) to an appr
   <img src="/figures/linear-algebra/svd-volume.svg" alt="SVD as rotate, stretch, rotate: volume scales by the product of singular values">
 </figure>
 
-**Connection to the determinant:** Once determinants are developed, one proves $|\det T| = s_1\cdots s_n$ directly from the SVD (using multiplicativity of det and $|\det Q| = 1$ for any orthogonal $Q$). The determinant is therefore not a mysterious formula — it is the product of singular values, which is exactly the volume scaling factor derived here. The full generality (all parallelepipeds, not just the right-singular-vector one) follows from the identity $\mathrm{vol}(T(P)) = |\det T|\cdot\mathrm{vol}(P)$.
+**Connection to the determinant and calculus:** Once determinants are developed, one proves $|\det T| = s_1\cdots s_n$ directly from the SVD (using multiplicativity of det and $|\det Q| = 1$ for any orthogonal $Q$). The full generality (all parallelepipeds, not just the right-singular-vector one) follows from the identity $\mathrm{vol}(T(P)) = |\det T|\cdot\mathrm{vol}(P)$.
 
 **Degenerate case:** If any $s_k = 0$, then $T$ collapses $\R^n$ into a proper subspace. The product $s_1\cdots s_n = 0$ correctly predicts that any full-dimensional parallelepiped is flattened to zero volume.
 :::
 
-## Matrix Factorizations: QR, Cholesky, and the Zoo
+## Matrix Factorizations: QR, Cholesky, LU
 
-Beyond the spectral theorem and SVD, several other factorizations are workhorses in numerical linear algebra, statistics, and machine learning. QR and Cholesky are developed below; LU is included for completeness.
+Beyond the spectral theorem and SVD, several other factorizations are workhorses in numerical linear algebra, statistics, and machine learning.
 
 :::theorem{#qr-factorization title="QR Factorization"}
 Suppose $A$ is a square matrix with linearly independent columns. Then there exist **unique** matrices $Q$ and $R$ such that $Q$ is unitary (orthogonal over $\R$), $R$ is upper triangular with only positive numbers on its diagonal, and
@@ -1080,10 +1108,10 @@ where the last step is the ONB expansion of $v_k$ (which lies in $\spn(e_1,\ldot
 :::
 
 :::remark
-**QR is Gram–Schmidt with receipts.** $Q$ stores the orthonormalized vectors; $R$ stores the bookkeeping (the inner products used along the way). Two canonical uses:
+QR decomposition has two canonical uses:
 
 - **Solving $Ax = b$ without Gaussian elimination:** $Ax = b \iff QRx = b \iff Rx = Q^*b$. Computing $Q^*b$ is one matrix–vector multiply; solving $Rx = Q^*b$ is back-substitution (fast, since $R$ is triangular).
-- **Least squares done right:** the OLS normal equations $X^TX\hat\beta = X^Ty$ square the condition number. With $X = QR$: $\hat\beta = R^{-1}Q^Ty$, computed by back-substitution — numerically far superior. This is what standard software actually does (QR or SVD, never the normal equations).
+- **Least squares done right:** the OLS normal equations $X^TX\hat\beta = X^Ty$ square the condition number. With $X = QR$: $\hat\beta = R^{-1}Q^Ty$, computed by back-substitution. This is numerically far superior and is what standard software actually does.
 
 :::
 
@@ -1121,12 +1149,7 @@ so $AS^{-1}$ is unitary. Hence $A = (AS^{-1})\,S$ is a factorization of $A$ as u
 :::
 
 :::remark
-**Cholesky is the triangular square root** — and the single most-used factorization in computational statistics:
-
-- **Sampling $\mathcal{N}(\mu, \Sigma)$:** compute $\Sigma = R^*R$; then $x = \mu + R^*z$ with $z \sim \mathcal{N}(0,I)$ has covariance $\mathbb{E}[R^*zz^*R] = R^*R = \Sigma$. Cholesky is preferred over $\Sigma^{1/2}$ in practice: roughly $\tfrac{1}{3}n^3$ flops vs. a full eigendecomposition.
-- **Gaussian processes / Kalman filters:** solve $\Sigma x = b$ via two triangular solves after Cholesky; get log-determinants via $\log\det\Sigma = 2\sum_k \log R_{kk}$ (needed in Gaussian log-likelihoods).
-- **Testing positive definiteness:** the standard numerical test for whether a matrix is positive definite is simply "does Cholesky succeed?"
-
+**Cholesky is the triangular square root** and is among the most-used factorizations in computational statistics.
 :::
 
 :::definition{#lu-factorization title="LU Factorization"}
@@ -1137,21 +1160,6 @@ PA = LU.
 $$
 
 *Sketch:* Gaussian elimination reduces $A$ to upper-triangular $U$ by subtracting multiples of rows from later rows; each such row operation is left-multiplication by a unit lower-triangular elementary matrix. Collecting the inverses of these operations gives $L$. Pivoting (the permutation $P$) is needed when a zero (or numerically tiny) pivot appears.
-
-LU is "Gaussian elimination, recorded": once computed, each new right-hand side $b$ in $Ax = b$ costs only two triangular solves. Cholesky is exactly the symmetric positive-definite specialization of LU (with $U = L^*$ up to diagonal scaling), at half the cost.
-:::
-
-:::theorem{#summary-the-factorization-zoo title="Summary: The Factorization Zoo"}
-| Factorization | Requires | Mnemonic | Canonical uses |
-| --- | --- | --- | --- |
-| **QR**<br>$A = QR$ | lin. indep. columns | *"Gram–Schmidt, with receipts"* — $Q$ = orthonormalized columns, $R$ = the bookkeeping | least squares; the QR eigenvalue algorithm; solving $Ax=b$ by back-substitution |
-| **Cholesky**<br>$B = R^*R$ | positive definite | *"the triangular square root"* | sampling $\mathcal{N}(\mu,\Sigma)$; GP regression; Kalman filters; log-determinants; PD test |
-| **LU**<br>$PA = LU$ | invertible (with pivoting) | *"Gaussian elimination, recorded"* | general linear solves with many right-hand sides |
-| **Spectral**<br>$A = Q\Lambda Q^T$ | self-adjoint (symmetric) | *"rotate, scale on eigenaxes, rotate back"* — one basis, real scalings | PCA; matrix functions $f(A) = Qf(\Lambda)Q^T$; quadratic forms |
-| **SVD**<br>$A = U\Sigma V^T$ | any matrix | *"rotate, stretch, rotate — two bases"* | low-rank approximation (Eckart–Young); pseudoinverse; PCA via data matrix; condition numbers |
-| **Polar**<br>$A = S\sqrt{A^*A}$ | any ($S$ unitary iff $A$ invertible) | *"$z = re^{i\theta}$ for matrices"* — isometry × stretch | nearest orthogonal matrix; Procrustes problems |
-
-*Relationships:* Cholesky = symmetric-PD specialization of LU; spectral theorem = SVD when $A$ is self-adjoint PSD (then $U = V$); QR is the computational engine inside both the Cholesky proof above and practical eigenvalue/SVD algorithms. Polar decomposition follows from SVD: $A = U\Sigma V^T = (UV^T)(V\Sigma V^T)$.
 :::
 
 ## PCA and Statistical Connections
@@ -1186,17 +1194,7 @@ Let $X \in \R^{m\times n}$ be centered, $\Sigma = X^TX$.
 :::
 
 :::remark
-**PCA via SVD directly:** The right singular vectors of $X$ are the eigenvectors of $X^TX = \Sigma$. In practice, compute the SVD of $X$ directly rather than forming $X^TX$: squaring $X$ squares the condition number, amplifying numerical errors. SVD of $X$ is numerically superior.
-
-**Note on the orthogonality of PCs:** Orthogonality of principal components ($v_1,\ldots,v_k$ orthogonal) is *not* imposed by hand. It falls out automatically: the PCs are eigenvectors of $\Sigma$, and self-adjoint operators have orthogonal eigenvectors (for distinct eigenvalues). When eigenvalues repeat, any ONB of the repeated eigenspace can serve as PCs — in this case there is no unique choice.
+Orthogonality of principal components ($v_1,\ldots,v_k$ orthogonal) is *not* imposed by hand. It falls out automatically: the PCs are eigenvectors of $\Sigma$, and self-adjoint operators have orthogonal eigenvectors (for distinct eigenvalues). When eigenvalues repeat, any ONB of the repeated eigenspace can serve as PCs; in this case there is no unique choice.
 :::
 
-:::moral{title="Gaps to Fill: Prerequisites for Statistics and Quant Finance"}
-
-- **Determinants:** $\det(\Sigma) = \prod_i \lambda_i$; needed for the multivariate normal density $|\Sigma|^{-1/2}e^{-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)}$ and Jacobians in change-of-variables integrals.
-- **Quadratic forms:** $x^TAx$ and positive definiteness criteria. Direct connection to $\chi^2$ distribution: if $x \sim \mathcal{N}(0,\Sigma)$ then $x^T\Sigma^{-1}x \sim \chi^2_n$.
-- **Matrix calculus:** $\frac{\partial}{\partial x}(x^TAx) = 2Ax$ (for symmetric $A$); $\frac{\partial}{\partial A}\log\det A = (A^{-1})^T$. These give OLS: minimize $\nm{Xb - y}^2$ over $b$ by setting gradient to zero $\Rightarrow \hat\beta = (X^TX)^{-1}X^Ty = \Sigma^{-1}X^Ty$.
-- **Multivariate Normal $\mathcal{N}(\mu, \Sigma)$:** Density requires determinant $+$ quadratic form $+$ $\Sigma > 0$. Note you already have the PSD square root $\Sigma^{1/2}$ ([[#positive-square-root]]), which is used in the sampling formula $x = \mu + \Sigma^{1/2}z$, $z \sim \mathcal{N}(0,I)$.
-- **Trace:** $\mathrm{tr}(A) = \sum_i A_{ii} = \sum_i \lambda_i$ (sum of eigenvalues). Key because $\mathrm{tr}(\Sigma) = $ total variance in the data; $\mathrm{tr}(X^TX) = \nm{X}_F^2$.
-
-:::
+More to come...
