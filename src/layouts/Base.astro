@@ -112,6 +112,16 @@ const year = new Date().getFullYear();
         });
     </script>
     <script is:inline>
+      // external links open in a new tab so readers never lose the site;
+      // internal navigation and in-page anchors stay in the same tab
+      document.querySelectorAll('a[href]').forEach(function (a) {
+        if (/^https?:$/.test(a.protocol) && a.host !== location.host) {
+          a.target = '_blank';
+          a.rel = 'noopener';
+        }
+      });
+    </script>
+    <script is:inline>
       document.getElementById('theme-toggle').addEventListener('click', function () {
         var next =
           document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
