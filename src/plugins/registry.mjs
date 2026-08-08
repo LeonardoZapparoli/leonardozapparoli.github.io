@@ -21,16 +21,19 @@ const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 function parseFile(filePath) {
   let src = fs.readFileSync(filePath, 'utf8');
   let code = null;
+  let title = null;
   const fm = src.match(FRONTMATTER_RE);
   if (fm) {
     const codeLine = fm[1].match(/^code:\s*["']?([A-Za-z][A-Za-z0-9]*)["']?\s*$/m);
     if (codeLine) code = codeLine[1];
+    const titleLine = fm[1].match(/^title:\s*["']?(.+?)["']?\s*$/m);
+    if (titleLine) title = titleLine[1];
     src = src.slice(fm[0].length);
   }
   const tree = parser.parse(src);
   const items = annotateNumbers(tree);
   const slug = path.basename(filePath).replace(/\.md$/, '');
-  return { code, slug, items };
+  return { code, slug, title, items };
 }
 
 export function getRegistry() {
@@ -60,7 +63,7 @@ export function getRegistry() {
       continue;
     }
     const route = `/notes/${rec.slug}/`;
-    entries.set(rec.code, { slug: rec.slug, route });
+    entries.set(rec.code, { slug: rec.slug, route, title: rec.title });
 
     const seen = new Set();
     for (const item of rec.items) {

@@ -61,6 +61,24 @@ function makeRef(refText, currentCode, registry, file) {
   } else if (refText.includes(':')) {
     key = refText;
     label = refText.slice(refText.indexOf(':') + 1);
+  } else {
+    // bare entry code, e.g. [[ElecPricing]]: link to the whole entry,
+    // displayed as the entry's title
+    const entry = registry.entries.get(refText);
+    if (entry) {
+      return {
+        type: 'link',
+        url: entry.route,
+        data: {
+          hProperties: {
+            className: ['xref', 'xref-external'],
+            target: '_blank',
+            rel: 'noopener',
+          },
+        },
+        children: [{ type: 'text', value: entry.title || refText }],
+      };
+    }
   }
 
   const info = key ? registry.labels.get(key) : undefined;
