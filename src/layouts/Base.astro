@@ -112,10 +112,13 @@ const year = new Date().getFullYear();
         });
     </script>
     <script is:inline>
-      // external links open in a new tab so readers never lose the site;
-      // internal navigation and in-page anchors stay in the same tab
+      // external links and PDFs open in a new tab so readers never lose
+      // the site; internal navigation and in-page anchors stay in the
+      // same tab
       document.querySelectorAll('a[href]').forEach(function (a) {
-        if (/^https?:$/.test(a.protocol) && a.host !== location.host) {
+        var external = /^https?:$/.test(a.protocol) && a.host !== location.host;
+        var isPdf = /\.pdf$/i.test(a.pathname);
+        if (external || isPdf) {
           a.target = '_blank';
           a.rel = 'noopener';
         }

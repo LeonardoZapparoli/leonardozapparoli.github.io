@@ -15,6 +15,10 @@ title: Miscellaneous
 - [Jeff Nippard](https://www.youtube.com/@JeffNippard)
 - [Cracking The Cryptic](https://www.youtube.com/channel/UCC-UOdK8-mIjxBQm_ot1T-Q)
 
-## Chess
+## Some PDFs I Like
 
-I was an avid chess player between the ages of 14 and 17. My favorite opening is the [Queen's Gambit Declined, Exchange Variation](https://en.wikipedia.org/wiki/Queen%27s_Gambit_Declined#Exchange_Variation:_4.cxd5). I continue to play blitz occasionally on [Chess.com](https://www.chess.com/member/chineseremaindertheorem).
+<!-- Drop the .pdf file into public/pdfs/ and add a bullet here.
+     The (source) part is optional — include it when you have the original link. -->
+
+- [Example PDF with a citation](/pdfs/example-one.pdf) — a line on why it's here. ([source](https://example.com))
+- [Example PDF without a citation](/pdfs/example-two.pdf) — replace with the real thing.
