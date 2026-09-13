@@ -1315,6 +1315,10 @@ To state the conflict on a single circle, let $\Lambda' = (\Lambda \bmod \pi) \c
 
 The resolution is that nothing requires them to agree. Both are $\P_P$-null, and this section assigns a conditional law not to a null set but to a random variable: $\P(P \in \cdot \mid \sigma(\Phi))$ and $\P(P \in \cdot \mid \sigma(\Lambda'))$ are the conditional laws given two different $\sigma$-algebras, each determined only for a.e. value of its variable, and $E$ is a null fiber of each. Nothing in the definitions relates the two kernels on a set that both happen to contain as a fiber. The symmetry argument conditioned on the set $E$, which is not information.
 
+> The concept of a conditional probability with regard to an isolated hypothesis whose probability equals 0 is inadmissible. For we can obtain a probability distribution for [the latitude] on the meridian circle only if we regard this circle as an element of the decomposition of the entire spherical surface onto meridian circles with the given poles.
+>
+> — Andrey Kolmogorov
+
 <figure class="fig">
   <img src="/figures/measure-theoretic-probability/band-wedge.svg" alt="Two spheres: a thin band around the equator of constant width, and a thin wedge between two meridians pinching at the poles">
 </figure>
@@ -1340,6 +1344,10 @@ $$
 $$
 
 because the wedge has width $2\eps\cos\phi$ at latitude $\phi$ and the $\cos\phi$ does not cancel: the wedge holds area in proportion to $\cos\phi$. Both events shrink to a great circle, but they distribute area along it differently, and the conditional distribution on the circle is the limit of one family of events or the other, never of the circle alone.
+
+> … the term 'great circle' is ambiguous until we specify what limiting operation is to produce it. The intuitive symmetry argument presupposes the equatorial limit; yet one eating slices of an orange might presuppose the other.
+>
+> — E. T. Jaynes
 
 **Takeaways.** The example teaches three things, which apply to every conditioning on a null event and not only to this one.
 
