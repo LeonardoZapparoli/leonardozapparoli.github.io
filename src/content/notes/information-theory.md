@@ -1,25 +1,25 @@
 ---
 title: "Introduction to Information Theory"
 code: InfoTheory
-description: "Lossless source coding from first principles: prefix codes and Kraft–McMillan, entropy, Huffman and arithmetic coding, the source coding theorem, and cross entropy and KL divergence."
+description: "Lossless source coding: prefix codes and Kraft–McMillan, entropy, Huffman and arithmetic coding, the source coding theorem, and cross entropy and KL divergence."
 date: 2026-08-09
 ---
 
-**References:** *Elements of Information Theory* by Cover & Thomas; *Information Theory, Inference, and Learning Algorithms* by MacKay; *Information Theory: From Coding to Learning* by Polyanskiy & Wu; Shannon's 1948 paper *A Mathematical Theory of Communication*.
+**References:** [*Elements of Information Theory*](https://books.google.com/books/about/Elements_of_Information_Theory.html?id=VWq5GG6ycxMC) by Cover & Thomas; [*A Mathematical Theory of Communication*](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) by Claude Shannon.
 
-This entry develops the core of lossless source coding from first principles: what a "source" (or "language") formally is; prefix-free codes and the Kraft–McMillan inequality; entropy as the fundamental limit of compression; how fractional bits are realized operationally (block coding and arithmetic coding); the duality between codes and probability distributions; Shannon's source coding theorem via the asymptotic equipartition property; and cross entropy and the Kullback–Leibler divergence as the cost of coding with the wrong model. A final section treats countably infinite and continuous alphabets carefully — in particular, *why discrete entropy does not survive the passage to the continuum but KL divergence does*. Throughout, $\log$ denotes $\log_2$ and $\ln$ the natural logarithm; entropies are measured in bits. We adopt the convention $0 \log 0 = 0$ (justified by $\lim_{t \downarrow 0} t \log t = 0$).
+This entry develops the theory of lossless source coding. It covers what a "source" (or "language") formally is, prefix-free codes and the Kraft–McMillan inequality, entropy as the limit of compression, the duality between codes and probability distributions, Shannon's source coding theorem, and cross entropy and the Kullback–Leibler divergence.
 
 ## The Setup: Sources, Codes, and What "Language" Means
 
 ### Sources
 
-Information theory's model of a "language" is deliberately impoverished: it forgets grammar, meaning, and syntax, and keeps only *statistics*. This is a feature. The compression results below hold for *any* statistical source, and everything a compressor can exploit is, by definition, statistical regularity.
+Information theory's model of a "language" is impoverished: it forgets grammar, meaning, and syntax, and keeps only *statistics*. The compression results below hold for *any* statistical source, and everything a compressor can exploit is, by definition, statistical regularity.
 
 :::definition{#source title="Source"}
 A **(discrete, memoryless) source** is a pair $(\X, p)$ where $\X$ is a finite or countable set (the **alphabet**; its elements are **symbols**) and $p$ is a probability mass function on $\X$. The source emits an i.i.d. sequence $X_1, X_2, \ldots \sim p$. A **message** of length $n$ is a realization $x^n = (x_1, \ldots, x_n) \in \X^n$.
 :::
 
-So when people say "the language English" in this context, they mean something like: $\X$ is a set of characters (or words, or tokens), and $p$ is the frequency distribution with which they occur. The i.i.d. assumption is obviously false for natural language — the symbols are strongly correlated — but nothing is lost by starting there. The fully general model of a source is an arbitrary stochastic process $(X_n)_{n \geq 1}$ with values in $\X$: a probability measure on the sequence space $\X^{\infty}$, whose finite-dimensional laws $\PR(X_1 = x_1, \ldots, X_n = x_n)$ encode all the dependence (that "q" is nearly always followed by "u," and so on); the i.i.d. source is the special case where these laws factorize. Once entropy and conditional entropy are in hand, the subsection on the entropy rate develops the general theory: for *stationary ergodic* processes, every theorem in this document holds with the entropy $H(p)$ replaced by the *entropy rate*. The i.i.d. case simply lets us invoke the law of large numbers where the general case needs the ergodic theorem; no conceptual content is lost.
+So when people say "the English language" in this context, they mean something like: $\X$ is a set of characters (or words, or tokens), and $p$ is the frequency distribution with which they occur. The i.i.d. assumption is obviously false for natural language (the symbols are strongly correlated) but nothing is lost by starting there. The fully general model of a source is an arbitrary stochastic process $(X_n)_{n \geq 1}$ with values in $\X$: a probability measure on the sequence space $\X^{\infty}$, whose finite-dimensional laws $\PR(X_1 = x_1, \ldots, X_n = x_n)$ encode all the dependence (that "q" is nearly always followed by "u," and so on); the i.i.d. source is the special case where these laws factorize. Once entropy and conditional entropy are in hand, the subsection on the entropy rate develops the general theory: for *stationary ergodic* processes, every theorem in this document holds with the entropy $H(p)$ replaced by the *entropy rate*. The i.i.d. case simply lets us invoke the law of large numbers where the general case needs the ergodic theorem; no conceptual content is lost.
 
 ### Codes
 
@@ -40,7 +40,7 @@ A code $C$ is:
 (c) **prefix-free** (or **instantaneous**) if no codeword is a proper prefix of another codeword.
 :::
 
-Prefix-free $\Rightarrow$ uniquely decodable $\Rightarrow$ nonsingular, and both implications are strict. (E.g. $C(a) = 0$, $C(b) = 01$, $C(c) = 11$ is uniquely decodable but not prefix-free: you can always decode, but you may need to look arbitrarily far ahead to know where the current codeword ends.) Prefix-free codes are the ones you can decode *online*, symbol by symbol, the instant each codeword completes — hence "instantaneous." Remarkably, restricting to prefix-free codes costs nothing in expected length ([[#mcmillan]]), so from now on "code" will mean "prefix-free code" unless stated otherwise.
+Prefix-free $\Rightarrow$ uniquely decodable $\Rightarrow$ nonsingular, and both implications are strict. (E.g. $C(a) = 0$, $C(b) = 01$, $C(c) = 11$ is uniquely decodable but not prefix-free: you can always decode, but you may need to look arbitrarily far ahead to know where the current codeword ends.) Prefix-free codes are the ones you can decode *online*, symbol by symbol, the instant each codeword completes. Remarkably, restricting to prefix-free codes costs nothing in expected length ([[#mcmillan]]), so from now on "code" will mean "prefix-free code" unless stated otherwise.
 
 :::definition{#expected-length title="Expected Length; the Objective"}
 The **expected length** of a code $C$ under source $p$ is
@@ -52,27 +52,25 @@ $$
 The lossless compression problem: minimize $L(C,p)$ over uniquely decodable $C$.
 :::
 
-That is the entire setup. One map, one constraint (decodability), one objective (expected bits per symbol). Everything else — entropy, cross entropy, KL — will emerge as the answer to, or the cost structure of, this optimization problem.
-
 ## Prefix-Free Codes: Trees, Intervals, and Kraft–McMillan
 
 ### The tree picture
 
 Identify binary strings with nodes of the infinite rooted binary tree: the root is the empty string; the node $s$ has children $s0$ and $s1$. Then *"$s$ is a prefix of $t$"* $\iff$ *"$t$ is a descendant of $s$."* Consequently:
 
-*A prefix-free code is exactly an antichain in the binary tree: a set of nodes, none of which is an ancestor of another.*
+*A prefix-free code is an antichain in the binary tree: a set of nodes, none of which is an ancestor of another.*
 
-This is the "pick a node and its whole subtree is deleted" picture: the moment you spend a codeword at node $s$, every descendant of $s$ becomes unusable (any descendant would have $s$ as a prefix). Codewords are therefore leaves of the finite tree obtained by pruning at the chosen nodes.
+The picture to keep in mind is that once you spend a codeword at node $s$, every descendant of $s$ becomes unusable (any descendant would have $s$ as a prefix). Codewords are therefore leaves of the finite tree obtained by pruning at the chosen nodes.
 
 <figure class="fig">
   <img src="/figures/information-theory/code-tree.svg" alt="The prefix-free code {0, 10, 110, 111} as an antichain in the binary tree">
 </figure>
 
-*The prefix-free code $\{0,\, 10,\, 110,\, 111\}$ (filled nodes). Choosing $0$ as a codeword deletes its entire subtree (dashed): no other codeword may descend from it. The codeword depths are $(1,2,3,3)$ and $2^{-1}+2^{-2}+2^{-3}+2^{-3} = 1$: the code is complete — it saturates the Kraft inequality.*
+*The prefix-free code $\{0,\, 10,\, 110,\, 111\}$ (filled nodes). Choosing $0$ as a codeword deletes its entire subtree (dashed). The codeword depths are $(1,2,3,3)$ and $2^{-1}+2^{-2}+2^{-3}+2^{-3} = 1$: the code is complete and saturates the Kraft inequality.*
 
 ### The interval picture
 
-An equivalent geometry, which will pay off twice (in the Kraft converse and in arithmetic coding): map the codeword $c = c_1 c_2 \cdots c_\ell$ to the dyadic interval
+An equivalent geometry: map the codeword $c = c_1 c_2 \cdots c_\ell$ to the dyadic interval
 
 $$
 I(c) \;=\; \big[\, 0.c_1 c_2 \cdots c_\ell,\; 0.c_1 c_2 \cdots c_\ell + 2^{-\ell} \,\big) \;\subseteq\; [0,1),
@@ -109,16 +107,16 @@ $$
 Every *uniquely decodable* code also satisfies [[#kraft-ineq]]. Consequently, for any uniquely decodable code there is a prefix-free code with the same codeword lengths: unique decodability buys nothing beyond prefix-freeness in terms of achievable lengths.
 :::
 
-:::proof{title="Proof (finite $\X$; Karush's counting argument)"}
-We first fix notation; the proof introduces one auxiliary parameter and two derived objects, and it is worth being pedantic about what each one is.
+:::proof{title="finite $\X$; Karush's counting argument"}
+We first fix notation.
 
 - $S := \sum_{x \in \X} 2^{-\ell(x)}$ is the Kraft sum: a single fixed real number, determined by the code. The goal is $S \leq 1$.
-- $n \in \N$ is a *free parameter*, introduced out of thin air, with no meaning intrinsic to the code. The strategy is to prove, for *every* $n$, an inequality relating $S$ and $n$, and then let $n \to \infty$ at the very end.
-- $x^n = (x_1, \ldots, x_n) \in \X^n$ denotes a message of $n$ source symbols. (The superscript is tuple notation, not a power — standard but regrettable information-theory convention.) Its encoding $C^*(x^n) = C(x_1)\cdots C(x_n)$ has bit length $|C^*(x^n)| = \ell(x_1) + \cdots + \ell(x_n)$, since concatenation adds lengths.
-- $\ell_{\max} := \max_{x \in \X} \ell(x)$ is the length of the longest codeword (finite because $\X$ is finite). Its only role: every length-$n$ message encodes to at most $n \ell_{\max}$ bits, so $n\ell_{\max}$ is the range of possible encoded lengths.
+- $n \in \N$ is a free parameter. The strategy is to prove, for every $n$, an inequality relating $S$ and $n$, and then let $n \to \infty$ at the very end.
+- $x^n = (x_1, \ldots, x_n) \in \X^n$ denotes a message of $n$ source symbols. Its encoding $C^*(x^n) = C(x_1)\cdots C(x_n)$ has bit length $|C^*(x^n)| = \ell(x_1) + \cdots + \ell(x_n)$, since concatenation adds lengths.
+- $\ell_{\max} := \max_{x \in \X} \ell(x)$ is the length of the longest codeword (finite because $\X$ is finite).
 - $N_m := \#\big\{x^n \in \X^n : |C^*(x^n)| = m\big\}$ counts the length-$n$ messages whose encoding is *exactly* $m$ bits long. (It depends on $n$ as well; we suppress this in the notation since $n$ is fixed until the last line.)
 
-*Step 1: $S^n$ is the Kraft sum of the block code.* Here $S^n$ is literally the number $S$ raised to the $n$-th power. Expanding the $n$-th power of a sum by the distributive law — one term per choice of one summand from each factor, i.e. one term per $n$-tuple —
+*Step 1: $S^n$ is the Kraft sum of the induced code $C^*$ on the super-alphabet $\X^n$ of length-$n$ messages*. Here $S^n$ is literally the number $S$ raised to the $n$-th power.
 
 $$
 S^n \;=\; \Bigg(\sum_{x \in \X} 2^{-\ell(x)}\Bigg)^{\!n}
@@ -126,15 +124,13 @@ S^n \;=\; \Bigg(\sum_{x \in \X} 2^{-\ell(x)}\Bigg)^{\!n}
 \;=\; \sum_{x^n \in \X^n} 2^{-|C^*(x^n)|}.
 $$
 
-Interpretation: $S^n$ is the Kraft sum of the induced code $C^*$ on the super-alphabet $\X^n$ of length-$n$ messages.
-
 *Step 2: regroup by encoded length.* Instead of summing message by message, collect together all messages whose encoding has the same length $m$; since $1 \leq |C^*(x^n)| \leq n\ell_{\max}$,
 
 $$
 S^n \;=\; \sum_{m=1}^{n \ell_{\max}} N_m\, 2^{-m}.
 $$
 
-*Step 3: unique decodability enters — the only time.* Unique decodability says $C^*$ is injective: distinct messages receive distinct bitstrings. But only $2^m$ binary strings of length $m$ exist in the world, and an injective map cannot send more than $2^m$ messages onto them. Hence
+*Step 3: apply unique decodability.* Unique decodability says $C^*$ is injective: distinct messages receive distinct bitstrings. But only $2^m$ binary strings of length $m$ exist in the world, and an injective map cannot send more than $2^m$ messages onto them. Hence
 
 $$
 N_m \;\leq\; 2^m \qquad \text{for every } m.
@@ -146,14 +142,10 @@ $$
 S^n \;\leq\; \sum_{m=1}^{n\ell_{\max}} 2^m \cdot 2^{-m} \;=\; n\, \ell_{\max} \qquad \text{for every } n \geq 1.
 $$
 
-Both $S$ and $\ell_{\max}$ are fixed constants. If $S > 1$, the left side grows exponentially in $n$ while the right side grows linearly — contradiction for large $n$. Equivalently, take $n$-th roots: $S \leq (n \ell_{\max})^{1/n} = 2^{\log(n\ell_{\max})/n} \to 2^0 = 1$, so $S \leq 1$.
+Both $S$ and $\ell_{\max}$ are fixed constants. If $S > 1$, the left side grows exponentially in $n$ while the right side grows linearly, a contradiction. So $S \leq 1$.
 
 Finally, countable $\X$: the restriction of a uniquely decodable code to any finite subalphabet $F \subseteq \X$ is still uniquely decodable (fewer messages to distinguish), so $\sum_{x \in F} 2^{-\ell(x)} \leq 1$ for every finite $F$; take the supremum over $F$.
 :::
-
-**Rigorous intuition.** Kraft is a conservation law: codeword lengths are not free-floating integers but shares of a unit budget, with a length-$\ell$ codeword costing $2^{-\ell}$. The tree says why: committing to a shallow node destroys exponentially much of the tree below it. McMillan says this budget constraint is not an artifact of the prefix-free restriction — it binds *any* scheme that can be decoded at all, which is why the entire theory can be phrased in terms of prefix codes without loss.
-
-As for the proof, which looks pulled from thin air (an unmotivated power $S^n$, a mysterious regrouping, a limit): it is in fact forced, and two observations reconstruct it. *First, the only available hypothesis is a counting statement.* The interval proof of Kraft is dead on arrival here — for a merely uniquely decodable code the intervals can nest ($C = \{0, 01, 11\}$ is uniquely decodable but $I(01) \subseteq I(0)$) — and once the geometry is stripped away, the definition of unique decodability provides exactly one thing: $C^*$ is *injective on $\X^n$, for every $n$*. Injectivity into binary strings is intrinsically a counting fact — at most $2^m$ things can be sent to strings of length $m$ — so whatever the proof is, it must be a counting argument; there is no other material to build with. *Second, long blocks must appear, because the single-letter hypothesis is provably too weak.* Injectivity on $\X$ alone (nonsingularity) does not imply Kraft: $C(a) = 0$, $C(b) = 1$, $C(c) = 00$ is injective on $\{a,b,c\}$ with $S = \tfrac12 + \tfrac12 + \tfrac14 > 1$ (and indeed not uniquely decodable: $00$ encodes both $c$ and $aa$). So the force pinning $S \leq 1$ can only come from injectivity on *long* messages — a code with $S > 1$ over-promises short encodings, and the fraud is exposed only when many symbols must be encoded at once and the code runs out of distinct short bitstrings. This dictates the proof's shape before any formula is written: derive one inequality per block length $n$, and extract the conclusion as $n \to \infty$. The parameter $n$ is not clever; it is the hypothesis's own index variable, and the creative act is reading "for every $n$" in the definition not as a burden to verify but as a resource to spend. Everything else is bookkeeping: cashing out injectivity at block length $n$ gives $\sum_m N_m 2^{-m} \leq n\ell_{\max}$, the left side factorizes into $S^n$ because the weight $2^{-\ell}$ is multiplicative under concatenation, and $n$-th roots annihilate the linear slack (the "tensor power trick," the same subexponential-factors-die principle that runs the asymptotics of the source coding theorem). One historical footnote that should itself be reassuring: this is not McMillan's proof — his 1956 original was substantially more involved; the counting argument is Karush's (1961). Slick proofs are usually archaeology, found after the theorem by asking what the first proof was really using.
 
 ## Entropy
 
