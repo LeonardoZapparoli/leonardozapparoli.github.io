@@ -10,4 +10,4 @@ My interests include math, problem-solving, aviation, skiing, soccer, tennis, an
 
 ## Contact
 
-<a class="email-link" href="#" data-user="leonardozapparoli" data-domain="gmail.com">Email</a> · [LinkedIn](https://www.linkedin.com/in/leonardo-zapparoli-a84657189/)
+<a class="email-link" href="#" data-user="leonardozapparoli01" data-domain="gmail.com">Email</a> · [LinkedIn](https://www.linkedin.com/in/leonardo-zapparoli-a84657189/)

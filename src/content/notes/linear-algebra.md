@@ -5,9 +5,11 @@ description: "Finite-dimensional linear algebra: vector spaces, linear maps, spe
 date: 2026-07-30
 ---
 
-**Reference:** [*Linear Algebra Done Right*](https://linear.axler.net/LADR4e.pdf) by Sheldon Axler.
+**Reference(s):** [*Linear Algebra Done Right*](https://linear.axler.net/LADR4e.pdf) by Sheldon Axler.
 
 ## Vector Spaces
+
+### Vector spaces, subspaces, and direct sums
 
 :::definition{#vector-space-over-a-field title="Vector Space over a Field $\F$"}
 A **vector space** $V$ over a field $\F$ (usually $\R$ or $\C$ in this document) is a set equipped with addition and scalar multiplication satisfying eight axioms (commutativity, associativity, distributivity, additive/multiplicative identities and inverses). Elements of $V$ are **vectors**; elements of $\F$ are **scalars**. Vector spaces are closed under **linear combinations**, meaning for any set of vectors $v_1,...,v_k \in V$ and scalars $a_1,...,a_k \in \F$, the element $\sum_i a_iv_i$ is again an element of the vector space.
@@ -37,6 +39,8 @@ The sum is said to be a **direct sum**, written $V_1 \oplus \cdots \oplus V_m$, 
 *Intuition: a direct sum is a decomposition with zero redundancy. The canonical example ([[#orthogonal-direct-sum-decomposition]]) is $V = U \oplus U^\perp$. For instance, the Euclidean plane $\R^2$ is a direct sum of the $x$- and $y$-axes.*
 :::
 
+### Span, independence, and bases
+
 :::definition{#span-linear-independence-basis-dimension title="Span, Linear Independence, Basis, Dimension"}
 **Span:** $\spn(v_1,\ldots,v_m)$ = all linear combinations of the $v_i$, i.e. "everything you can reach." Always a subspace.
 
@@ -46,6 +50,8 @@ The sum is said to be a **direct sum**, written $V_1 \oplus \cdots \oplus V_m$, 
 
 **Dimension:** Any two bases have the same length, called $\dim V$.
 :::
+
+### Fundamental dimension theorems
 
 The following lemma is incredibly intuitive yet powerful. It says, in words, that if a list of vectors is redundant in the sense of linear dependence, you can find a *first* redundant one whose removal doesn't affect the span.
 
@@ -109,6 +115,8 @@ Let $u_1,\ldots,u_k$ be a basis of $U \cap W$. Extend to a basis $u_1,\ldots,u_k
 
 Linear maps constitute the heart of Linear Algebra. These are functions from one vector space to another that preserve the domain space's structure.
 
+### Linear maps, null space, and range
+
 :::definition{#linear-map-and-operator title="Linear Map and Operator"}
 $T : V \to W$ is a **linear map** (write $T \in \Lcal(V,W)$) iff:
 
@@ -138,6 +146,8 @@ $$
 
 Both are subspaces. $T$ **injective** $\iff \nul(T) = \{0\}$;  $T$ **surjective** $\iff \rng(T) = W$.
 :::
+
+### Rank-nullity
 
 The following result is so important that it is named a *Fundamental Theorem*.
 
@@ -295,6 +305,8 @@ Note that this theorem contains nothing novel. It is just the composition rule $
 
 ## Eigenvalues and Polynomials
 
+### Eigenvalues and eigenvectors
+
 :::definition{#eigenvalue-and-eigenvector title="Eigenvalue and Eigenvector"}
 $\lambda \in \F$ is an **eigenvalue** of $T \in \Lcal(V)$ if $\exists\, v \neq 0$ with $Tv = \lambda v$. Such $v$ is an **eigenvector** for $\lambda$. The **eigenspace** for the eigenvalue is defined as $E(\lambda,T) = \set{v : Tv = \lambda v}  = \nul(T - \lambda I)$.
 
@@ -327,6 +339,8 @@ Since $\lambda_i \neq \lambda_m$ for $i < m$, all factors $(\lambda_i - \lambda_
 :::corollary{#eigenvalue-numerical-limit title="Operator cannot have more eigenvalues than dimension of vector space"}
 An operator on $V$ has *at most* $\dim V$ distinct eigenvalues (a linearly independent list has length $\leq \dim V$).
 :::
+
+### Minimal polynomial and diagonalizability
 
 :::theorem{#minimal-polynomial title="Minimal Polynomial"}
 For $T \in \Lcal(V)$, the **minimal polynomial** of $T$ is the unique monic polynomial $p \in \mathcal{P}(\F)$ of smallest degree with $p(T) = 0$. It satisfies $\deg p \leq \dim V$, and **its zeros are exactly the eigenvalues of $T$**.
@@ -368,6 +382,8 @@ Conversely, for any $w \in E(\mu,T)$ and any basis vector $e_j$ with $\mu_j \neq
 
 ## Inner Product Spaces
 
+### Inner products and Cauchy–Schwarz
+
 :::definition{#inner-product title="Inner Product"}
 An **inner product** on $V$ is a function $\ip{\cdot}{\cdot} : V \times V \to \F$ satisfying:
 
@@ -394,6 +410,8 @@ $$
 
 with equality iff one of $u, v$ is a scalar multiple of the other.
 :::
+
+### Orthonormal bases and Gram–Schmidt
 
 :::definition{#orthonormal-list-and-onb title="Orthonormal List and ONB"}
 A list $e_1,\ldots,e_m$ is **orthonormal** if $\ip{e_i}{e_j} = \delta_{ij}$ (norm 1, pairwise orthogonal).
@@ -458,6 +476,8 @@ In the definition of $f_k$, each RHS term $\frac{\ip{v_k}{f_j}}{\nm{f_j}^2}\,f_j
 
 ## Orthogonal Complements and Projections
 
+### The Riesz representation theorem
+
 :::theorem{#riesz-representation-theorem title="Riesz Representation Theorem"}
 If $V$ is finite-dimensional and $\varphi : V \to \F$ is a linear functional, then $\exists!$ vector $u \in V$ such that
 
@@ -488,6 +508,8 @@ Another innocent application of Riesz appears in calculus. For $f : V \to \R$ ($
 By Riesz (6.42), this functional is an inner product against a unique vector, *defined* to be the gradient: $f'(x)\delta x = \ip{\delta x}{\nabla f(x)}, \forall \delta x \in V$. This viewpoint has two payoffs: (i) the interpretation of the gradient as the direction of steepest ascent follows immediately from Cauchy-Schwarz: $\ip{\delta x}{\nabla f(x)} \leq \nm{\delta x}\,\nm{\nabla f(x)}$, with equality iff $\delta x \parallel \nabla f(x)$; (ii) the gradient depends on the *choice of inner product*, while the derivative does not; change the inner product and the same $f'(x)$ gets a different Riesz vector. (``Natural gradient'' methods in ML exploit this.)
 :::
 
+### Orthogonal complements
+
 :::definition{#orthogonal-complement title="Orthogonal Complement"}
 For any subset $U \subseteq V$ (need not be a subspace):
 
@@ -516,6 +538,8 @@ $$
 
 The first piece lies in $U$ (it's a combination of the ONB for $U$); the second is orthogonal to each $e_i$ hence lies in $U^\perp$. Uniqueness: $U \cap U^\perp = \{0\}$ (any $v$ in both satisfies $\nm{v}^2 = \ip{v}{v} = 0$). Dimension: $\dim V = m + k$, so $\dim U^\perp = k = \dim V - \dim U$.
 :::
+
+### Orthogonal projection and best approximation
 
 :::definition{#orthogonal-projection title="Orthogonal Projection"}
 For a subspace $U \subseteq V$, write each $v \in V$ uniquely as $v = u + w$ with $u \in U$, $w \in U^\perp$ (this is possible by [[#orthogonal-direct-sum-decomposition]]). The **orthogonal projection onto $U$** is the operator $P_U \in \Lcal(V)$ defined by $P_U v = u$.
@@ -710,6 +734,8 @@ So $S$ is normal too. Now $Sv = Tv - \lambda v = 0$. Since $S$ is normal: $\nm{S
 
 ## Spectral Theorems
 
+### The complex spectral theorem
+
 :::theorem{#complex-spectral-theorem title="Complex Spectral Theorem"}
 Let $\F = \C$ and $T \in \Lcal(V)$. The following are equivalent:
 
@@ -722,6 +748,8 @@ Let $\F = \C$ and $T \in \Lcal(V)$. The following are equivalent:
 :::proof
 (c) $\Rightarrow$ (b) $\Rightarrow$ (a) are straightforward. For (a) $\Rightarrow$ (c): By Schur's theorem, $T$ has an upper-triangular matrix $A$ w.r.t. some ONB $e_1,\ldots,e_n$. Compute $TT^*$ and $T^*T$ from $A$: normality $TT^* = T^*T$ forces $|A_{11}|^2 = |A_{11}|^2 + |A_{12}|^2 + \cdots$, so $A_{1j} = 0$ for all $j > 1$. Continuing down the diagonal, the same argument forces all off-diagonal entries to be zero. So $A$ is diagonal.
 :::
+
+### The real spectral theorem
 
 :::theorem{#real-spectral-theorem title="Real Spectral Theorem"}
 Let $\F = \R$ and $T \in \Lcal(V)$. The following are equivalent:
@@ -803,6 +831,8 @@ The combined list $\{v_1, v_2,\ldots,v_n\}$ is an ONB for $V$: each $v_i$ is a u
 
 ## Positive Operators, Square Roots, and Isometries
 
+### Positive semidefinite operators
+
 :::definition{#positive-semidefinite-psd-operator title="Positive Semidefinite (PSD) Operator"}
 $T \in \Lcal(V)$ is **positive semidefinite (PSD)** if $T$ is self-adjoint and $\ip{Tv}{v} \geq 0$ for all $v \in V$.
 
@@ -879,6 +909,8 @@ Thus $T$ is positive.
 
 :::
 
+### Square roots and isometries
+
 :::theorem{#positive-square-root title="Positive Square Root"}
 Every PSD operator $T$ has a **unique** PSD square root: a PSD operator $R$ with $R^2 = T$.
 :::
@@ -896,6 +928,8 @@ If $\dim V = \dim W$: isometry $\iff$ **unitary** ($SS^* = S^*S = I$, i.e., $S^{
 :::
 
 ## Singular Value Decomposition
+
+### Singular values
 
 :::lemma{#properties-of-t*t title="Properties of $T^*T$"}
 Suppose $T \in \Lcal(V,W)$. Then
@@ -925,6 +959,8 @@ Suppose $T \in \Lcal(V,W)$. Then
 
 (c): immediate by (b).
 :::
+
+### The SVD theorem
 
 The next result is incredibly powerful. It shows that *any* linear map between two vector spaces $V$ and $W$ has a beautiful description in terms of its singular values and orthonormal lists in $V$ and $W$.
 
@@ -956,6 +992,8 @@ Tv = T\!\left(\sum_{k=1}^n \ip{v}{e_k}e_k\right) = \sum_{k=1}^m \ip{v}{e_k}\,Te_
 $$
 
 :::
+
+### Norm, pseudoinverse, and low-rank approximation
 
 :::theorem{#norm-of-a-linear-map title="Norm of a Linear Map $= s_1$"}
 $\nm{T} := \max_{\nm{v}=1}\nm{Tv} = s_1$ (largest singular value).
@@ -1076,6 +1114,8 @@ So $T$ maps every approximating box for $\Omega$ (in the $e_k$-basis) to an appr
 
 Beyond the spectral theorem and SVD, several other factorizations are workhorses in numerical linear algebra, statistics, and machine learning.
 
+### QR factorization
+
 :::theorem{#qr-factorization title="QR Factorization"}
 Suppose $A$ is a square matrix with linearly independent columns. Then there exist **unique** matrices $Q$ and $R$ such that $Q$ is unitary (orthogonal over $\R$), $R$ is upper triangular with only positive numbers on its diagonal, and
 
@@ -1115,6 +1155,8 @@ QR decomposition has two canonical uses:
 
 :::
 
+### Cholesky factorization
+
 :::definition{#positive-definite-matrices title="Positive Definite Matrices"}
 A self-adjoint $T \in \Lcal(V)$ is **positive invertible** iff $\ip{Tv}{v} > 0$ for every $v \neq 0$ (strict inequality; compare PSD which allows $= 0$).
 
@@ -1151,6 +1193,8 @@ so $AS^{-1}$ is unitary. Hence $A = (AS^{-1})\,S$ is a factorization of $A$ as u
 :::remark
 **Cholesky is the triangular square root** and is among the most-used factorizations in computational statistics.
 :::
+
+### LU factorization
 
 :::definition{#lu-factorization title="LU Factorization"}
 For an invertible $A \in \F^{n,n}$ (with row pivoting): there exist a permutation matrix $P$, unit lower-triangular $L$, and upper-triangular $U$ with

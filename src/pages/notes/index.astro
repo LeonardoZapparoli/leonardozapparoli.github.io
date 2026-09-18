@@ -1,7 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { lastUpdated, formatDate } from '../../lib/dates.mjs';
 import { site } from '../../../site.config.mjs';
 
 const intro = await getEntry('pages', 'notes-intro');
@@ -26,8 +25,7 @@ const entries = (await getCollection('notes')).sort((a, b) =>
             {entry.data.title}
           </a>
           <p class="entry-line">
-            <span class="code-chip">{entry.data.code}</span> · Last updated{' '}
-            {formatDate(lastUpdated(entry.filePath, entry.data.date))}
+            <span class="code-chip">{entry.data.code}</span>
           </p>
           <p class="entry-desc">{entry.data.description}</p>
         </li>
