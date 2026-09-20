@@ -24,9 +24,6 @@ const entries = (await getCollection('notes')).sort((a, b) =>
           <a class="entry-title" href={`/notes/${entry.id}/`}>
             {entry.data.title}
           </a>
-          <p class="entry-line">
-            <span class="code-chip">{entry.data.code}</span>
-          </p>
           <p class="entry-desc">{entry.data.description}</p>
         </li>
       ))

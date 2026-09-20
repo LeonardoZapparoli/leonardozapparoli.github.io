@@ -41,8 +41,6 @@
   --panel-border: #9a968c;
   --link-underline: #b8b3a7;
   --hover-bg: #efece4;
-  --chip-bg: #ebe8df;
-  --chip-text: #4c4840;
   --flash: #ece8dd;
   --broken: #b3261e;
 }
@@ -57,8 +55,6 @@
   --panel-border: #6f6f6f;
   --link-underline: #5c5c5c;
   --hover-bg: #232323;
-  --chip-bg: #262626;
-  --chip-text: #b8b8b8;
   --flash: #2f2f2f;
   --broken: #ff6b61;
 }
@@ -305,27 +301,10 @@ blockquote {
   background: none;
 }
 
-.entry-list .entry-line {
-  margin: 0.25rem 0 0.35rem;
-  color: var(--muted);
-  font-size: 0.88rem;
-}
-
 .entry-list .entry-desc {
-  margin: 0;
+  margin: 0.3rem 0 0;
   color: var(--text);
   font-size: 1rem;
-}
-
-.code-chip {
-  display: inline-block;
-  font-family: 'SF Mono', Menlo, Consolas, monospace;
-  font-size: 0.72rem;
-  background: var(--chip-bg);
-  color: var(--chip-text);
-  border-radius: 3px;
-  padding: 0.1rem 0.45rem;
-  vertical-align: 0.08em;
 }
 
 /* ---------- Entry pages ---------- */
@@ -334,10 +313,8 @@ blockquote {
   margin-bottom: 2rem;
 }
 
-.entry-meta {
-  color: var(--muted);
-  font-size: 0.92rem;
-  margin: 0.3rem 0 1rem;
+.entry-header h1 {
+  margin-bottom: 1rem;
 }
 
 .entry-abstract {
