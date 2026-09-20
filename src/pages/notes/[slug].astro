@@ -67,6 +67,9 @@ for (const h of headings.filter((h) => h.depth === 2 || h.depth === 3)) {
     </article>
   </div>
 
+  <link rel="stylesheet" href="/xref-preview/xref-preview.css" /> {/* xref-preview: removable */}
+  <script is:inline src="/xref-preview/xref-preview.js" defer></script> {/* xref-preview: removable */}
+
   <script is:inline>
     (function () {
       var links = Array.prototype.slice.call(
