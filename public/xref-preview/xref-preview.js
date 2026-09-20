@@ -51,9 +51,18 @@
       return frag;
     }
 
-    var target = doc.getElementById(hash);
+    // a section heading can share its id with an environment ("## Entropy"
+    // and a definition labelled #entropy), so look for the environment or
+    // equation with this id rather than the first element carrying it
+    var target = null;
+    var candidates = doc.querySelectorAll('.env[id], .equation[id]');
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i].id === hash) {
+        target = candidates[i];
+        break;
+      }
+    }
     if (!target) return null;
-    if (!target.matches('.env, .equation')) return null;
     var clone = target.cloneNode(true);
     stripIds(clone);
     frag.appendChild(clone);
