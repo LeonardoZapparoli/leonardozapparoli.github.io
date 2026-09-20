@@ -102,6 +102,25 @@
   margin: 0.15em 0;
 }
 
-.xref-card-eq .katex-display > .katex > .katex-html {
-  padding: 0 3.4em;
+/* KaTeX pins the equation number to the right edge on top of the
+   equation, so a card narrower than the equation shows them overlapping.
+   Inside a card the number follows the equation instead; a card that is
+   still too narrow scrolls sideways. */
+.xref-card .katex-display > .katex > .katex-html > .tag {
+  position: static;
+  display: inline-block;
+  margin-left: 2.2em;
+}
+
+.xref-card .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.15em;
+}
+
+/* quiet scrollbars inside the card */
+.xref-card,
+.xref-card .katex-display {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
 }
