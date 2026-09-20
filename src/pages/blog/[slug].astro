@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { formatDate } from '../../lib/dates.mjs';
 import { site } from '../../../site.config.mjs';
 
 export async function getStaticPaths() {
@@ -23,7 +22,6 @@ const { Content } = await render(post);
   <article class="entry">
     <header class="entry-header">
       <h1>{post.data.title}</h1>
-      <p class="entry-meta">{formatDate(post.data.date)}</p>
     </header>
     <div class="entry-body">
       <Content />
