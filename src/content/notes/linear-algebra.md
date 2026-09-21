@@ -1,7 +1,7 @@
 ---
 title: "Linear Algebra"
 code: LinAlg
-description: "Finite-dimensional linear algebra: vector spaces, linear maps, spectral theory, and matrix factorizations."
+description: "Finite-dimensional vector spaces, linear maps, spectral theory, and matrix factorizations."
 date: 2026-07-30
 ---
 

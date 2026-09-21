@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Information Theory"
 code: InfoTheory
-description: "Lossless source coding: prefix codes and Kraft–McMillan, entropy, Huffman and arithmetic coding, the source coding theorem, and cross entropy and KL divergence."
+description: "Prefix codes and Kraft–McMillan, entropy and cross entropy, Huffman coding, the source coding theorem, and Kullback-Leibler divergence."
 date: 2026-08-09
 ---
 

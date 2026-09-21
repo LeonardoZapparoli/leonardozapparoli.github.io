@@ -1,7 +1,7 @@
 ---
 title: "A Bridge to Measure-Theoretic Probability"
 code: Prob
-description: "A motivated bridge to measure-theoretic probability: sigma algebras, Radon–Nikodym derivative, Kolmogorov conditional expectation, and conditional laws."
+description: "Sigma algebras, Radon–Nikodym, Kolmogorov conditional expectation, and conditional laws."
 date: 2026-09-12
 ---
 

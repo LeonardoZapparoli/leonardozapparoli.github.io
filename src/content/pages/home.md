@@ -4,9 +4,9 @@ title: Home
 
 ## About me
 
-Welcome to my online repository. I'm a graduate of Yale College, where I studied math and computer science. I currently work in financial markets.
+Welcome to my online repository. I'm a graduate of Yale College, where I studied math and computer science. I currently work in commodities markets.
 
-My interests include math, problem-solving, aviation, skiing, soccer, tennis, and chess.
+I'm interested in math and problem-solving, particularly discrete math, probability, algorithms, and statistics. I'm also interested in the metacognition of doing mathematics.
 
 ## Contact
 

@@ -1,7 +1,7 @@
 ---
 title: "Optimization"
 code: Opt
-description: "Constrained optimization: tangent cones, KKT, Lagrangian, and the envelope theorem."
+description: "Tangent cones, KKT conditions, the Lagrangian, and the envelope theorem."
 date: 2026-08-03
 ---
 
