@@ -4,6 +4,8 @@ import remarkDirective from 'remark-directive';
 import rehypeKatex from 'rehype-katex';
 import { remarkTheoremEnvs } from './src/plugins/remark-theorem-envs.mjs';
 import { remarkCrossRefs } from './src/plugins/remark-cross-refs.mjs';
+import { remarkSmartQuotes } from './src/plugins/remark-smart-quotes.mjs';
+import { rehypeHeadingCollisions } from './src/plugins/rehype-heading-collisions.mjs';
 import { refSystem } from './src/plugins/integration.mjs';
 import { loadPreambleMacros } from './src/plugins/preamble.mjs';
 
@@ -18,7 +20,9 @@ export default defineConfig({
   },
   integrations: [refSystem()],
   markdown: {
-    remarkPlugins: [remarkMath, remarkDirective, remarkTheoremEnvs, remarkCrossRefs],
-    rehypePlugins: [[rehypeKatex, { macros, strict: false }]],
+    // our own quote handling replaces the built-in smartypants (see plugin)
+    smartypants: false,
+    remarkPlugins: [remarkMath, remarkDirective, remarkTheoremEnvs, remarkCrossRefs, remarkSmartQuotes],
+    rehypePlugins: [[rehypeKatex, { macros, strict: false }], rehypeHeadingCollisions],
   },
 });

@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { lastUpdated, formatDate } from '../../lib/dates.mjs';
 import { site } from '../../../site.config.mjs';
 
 export async function getStaticPaths() {
@@ -21,7 +20,6 @@ for (const h of headings.filter((h) => h.depth === 2 || h.depth === 3)) {
   else if (toc.length > 0) toc[toc.length - 1].children.push(h);
 }
 
-const updated = formatDate(lastUpdated(entry.filePath, entry.data.date));
 ---
 
 <Base
@@ -58,9 +56,6 @@ const updated = formatDate(lastUpdated(entry.filePath, entry.data.date));
     <article class="entry">
       <header class="entry-header">
         <h1>{entry.data.title}</h1>
-        <p class="entry-meta">
-          <span class="code-chip">{entry.data.code}</span> · Last updated {updated}
-        </p>
         <p class="entry-abstract">{entry.data.description}</p>
       </header>
       <div class="entry-body">
@@ -68,6 +63,9 @@ const updated = formatDate(lastUpdated(entry.filePath, entry.data.date));
       </div>
     </article>
   </div>
+
+  <link rel="stylesheet" href="/xref-preview/xref-preview.css" /> {/* xref-preview: removable */}
+  <script is:inline src="/xref-preview/xref-preview.js" defer></script> {/* xref-preview: removable */}
 
   <script is:inline>
     (function () {
