@@ -17,6 +17,8 @@ title: Miscellaneous
 - [A First Course in Stochastic Calculus](https://bookstore.ams.org/view?ProductCode=AMSTEXT/53)
 - [Stochastic Calculus and Financial Applications](http://www-stat.wharton.upenn.edu/~steele/StochasticCalculus.html)
 - [Nonlinear Optimization](https://www.mit.edu/~gfarina/67220/)
+- [Philosophy and the Practice of Bayesian Statistics](https://arxiv.org/pdf/1006.3868)
+- [Statistical Modeling: The Two Cultures](https://www2.math.uu.se/~thulin/mm/breiman.pdf)
 
 ## Some YouTube Channels
 
@@ -30,3 +32,4 @@ title: Miscellaneous
 - [Math with Ming](https://www.youtube.com/@mathwithming)
 - [Jeff Nippard](https://www.youtube.com/@JeffNippard)
 - [Cracking The Cryptic](https://www.youtube.com/channel/UCC-UOdK8-mIjxBQm_ot1T-Q)
+- [Welch Labs](https://www.youtube.com/@WelchLabs)
