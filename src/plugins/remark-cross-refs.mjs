@@ -61,6 +61,24 @@ function makeRef(refText, currentCode, registry, file) {
   } else if (refText.includes(':')) {
     key = refText;
     label = refText.slice(refText.indexOf(':') + 1);
+  } else {
+    // bare entry code, e.g. [[ElecPricing]]: link to the whole entry,
+    // displayed as the entry's title
+    const entry = registry.entries.get(refText);
+    if (entry) {
+      return {
+        type: 'link',
+        url: entry.route,
+        data: {
+          hProperties: {
+            className: ['xref', 'xref-external'],
+            target: '_blank',
+            rel: 'noopener',
+          },
+        },
+        children: [{ type: 'text', value: entry.title || refText }],
+      };
+    }
   }
 
   const info = key ? registry.labels.get(key) : undefined;
@@ -124,6 +142,26 @@ function mergeTextDirectiveRefs(tree) {
   });
 }
 
+// "[[#label]](iii)" parses as a markdown link with text "[#label]" and url
+// "iii"; restore it to plain text so the reference resolves and "(iii)" stays
+// as written. Inside link text, remark-directive may have split
+// "Code:label" into text + textDirective; rebuild the string from both.
+function unwrapRefLinks(tree) {
+  visit(tree, 'link', (node, index, parent) => {
+    if (!parent || typeof index !== 'number') return;
+    if (!/^[A-Za-z0-9]{1,6}$/.test(node.url)) return;
+    const parts = node.children.map((c) => {
+      if (c.type === 'text') return c.value;
+      if (c.type === 'textDirective' && (!c.children || c.children.length === 0)) return ':' + c.name;
+      return null;
+    });
+    if (parts.includes(null)) return;
+    const text = parts.join('');
+    if (!/^\[[^[\]]+\]$/.test(text)) return;
+    parent.children.splice(index, 1, { type: 'text', value: `[${text}](${node.url})` });
+  });
+}
+
 export function remarkCrossRefs() {
   return (tree, file) => {
     const frontmatter =
@@ -131,6 +169,7 @@ export function remarkCrossRefs() {
     const currentCode = frontmatter.code || null;
     let registry = null;
 
+    unwrapRefLinks(tree);
     mergeTextDirectiveRefs(tree);
 
     visit(tree, 'text', (node, index, parent) => {
