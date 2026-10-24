@@ -14,10 +14,13 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 
+// H1 in the body is an unnumbered part divider; H2 sections are numbered
+// by CSS counters so that part entries do not consume a number.
 const toc = [];
-for (const h of headings.filter((h) => h.depth === 2 || h.depth === 3)) {
-  if (h.depth === 2) toc.push({ ...h, children: [] });
-  else if (toc.length > 0) toc[toc.length - 1].children.push(h);
+for (const h of headings.filter((h) => h.depth <= 3)) {
+  if (h.depth === 1) toc.push({ ...h, part: true, children: [] });
+  else if (h.depth === 2) toc.push({ ...h, children: [] });
+  else if (toc.length > 0 && !toc[toc.length - 1].part) toc[toc.length - 1].children.push(h);
 }
 
 ---
@@ -35,7 +38,7 @@ for (const h of headings.filter((h) => h.depth === 2 || h.depth === 3)) {
             <span class="toc-title">Contents</span>
             <ol class="toc-list">
               {toc.map((h) => (
-                <li>
+                <li class={h.part ? 'toc-part' : 'toc-sec'}>
                   <a href={`#${h.slug}`}>{h.text}</a>
                   {h.children.length > 0 && (
                     <ol class="toc-sub">

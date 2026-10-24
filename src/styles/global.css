@@ -415,6 +415,47 @@ blockquote {
   }
 }
 
+/* table of contents: section numbers come from a CSS counter, so an
+   unnumbered part divider (a body H1) can sit in the list without
+   consuming a number */
+.toc ol.toc-list,
+.toc-side .toc ol.toc-list {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: tocsec;
+}
+
+.toc-list > li.toc-sec {
+  counter-increment: tocsec;
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.toc-list > li.toc-sec::before {
+  content: counter(tocsec) '.';
+  position: absolute;
+  left: 0;
+}
+
+.toc-list > li.toc-part {
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.toc-list > li.toc-part:first-child {
+  margin-top: 0;
+}
+
+/* part divider in the body: heavier than a section heading, unnumbered */
+.entry-body h1 {
+  font-size: 1.55rem;
+  margin: 3.5rem 0 1.2rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--rule-strong);
+}
+
 /* numbered sections: CSS counter matches the H2-ordinal numbering scheme */
 .entry-body {
   counter-reset: sec;
