@@ -64,7 +64,7 @@ function makeRef(refText, currentCode, registry, file) {
   } else {
     // bare entry code, e.g. [[ElecPricing]]: link to the whole entry,
     // displayed as the entry's title
-    const entry = registry.entries.get(refText);
+    const entry = registry.entries.get(refText) || registry.entriesCI.get(refText.toLowerCase());
     if (entry) {
       return {
         type: 'link',
@@ -81,7 +81,7 @@ function makeRef(refText, currentCode, registry, file) {
     }
   }
 
-  const info = key ? registry.labels.get(key) : undefined;
+  const info = key ? registry.labels.get(key) || registry.labelsCI.get(key.toLowerCase()) : undefined;
 
   if (!info) {
     const suggestion = key ? closestKey(key, registry) : null;

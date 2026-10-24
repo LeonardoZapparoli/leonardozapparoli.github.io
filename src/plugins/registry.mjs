@@ -90,5 +90,11 @@ export function getRegistry() {
     console.warn('[refs] ' + message);
   }
 
-  return { entries, labels };
+  // case-insensitive fallbacks, so [[prob:kernel]] finds Prob:kernel
+  const entriesCI = new Map();
+  for (const [code, entry] of entries) entriesCI.set(code.toLowerCase(), entry);
+  const labelsCI = new Map();
+  for (const [key, info] of labels) labelsCI.set(key.toLowerCase(), info);
+
+  return { entries, labels, entriesCI, labelsCI };
 }
