@@ -211,6 +211,10 @@ Let $X \in \R^{N \times D}$, $y \in \R^N$, and let $\hat y$ and $e = y - \hat y$
 If the columns of $X$ are linearly dependent, the fitted vector is still unique, by [[#normal-equations]](ii), and the weights are not. If $Xc = 0$ with $c \neq 0$, then $\hat w + c$ produces the same fitted vector as $\hat w$. The data determine the point of the column space and cannot determine which of several descriptions of that point to use. The case of columns that are nearly dependent is taken up in [[#fwl-takeaways]].
 :::
 
+:::remark{#redundant-feature title="A Redundant Feature Adds Nothing"}
+A linear model forms linear combinations of its features. A new feature that is itself a linear combination of the existing ones therefore makes available no prediction vector that was not available already. Precisely, let $X \in \R^{N \times D}$ have full column rank with least squares estimate $\hat w$ for a response $y$, and let $g = Xc$ for some $c \in \R^D$. The matrix $[X \;\; g]$ has the same column space as $X$, so the regression of $y$ on it has the same fitted vector and the same residual. Its least squares estimates are exactly the vectors $(\hat w - tc,\; t)$ with $t \in \R$. Each of these reproduces the fitted vector, since $X(\hat w - tc) + t g = X \hat w$, and conversely $Xa + tg = X \hat w$ gives $X(a + tc) = X \hat w$, hence $a = \hat w - tc$. Any weight $t$ may be placed on the new feature, provided the weights on the others are shifted by $-tc$ to compensate, and the data cannot distinguish among these choices. The redundant feature contributes nothing to the fit, and its only effect is that the weights are no longer unique.
+:::
+
 ## Properties of the Fit
 
 ### Changing the columns without changing the column space
